@@ -1,0 +1,123 @@
+{
+  "header": {
+    "name": "NIKHIL GANPAT NAVGHADE",
+    "title": "Senior Field Application Engineer | Automotive Radar | Radar SoCs | System Integration",
+    "location": "Munich, Germany",
+    "phone": "+49 163 5454172",
+    "email": "nikhil.nawaghadej@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/nikhil-navghade/"
+  },
+  "summary": "Senior Field Application / Radar Engineer with 12+ years of experience across automotive radar, radar SoCs, signal processing, embedded systems, system integration, validation and technical customer support. Combines deep radar algorithm knowledge with hands-on system debugging, RF validation and automation. Experienced in bridging application needs with engineering teams, troubleshooting HW/SW issues, supporting radar SoC integration, and translating complex radar-system behavior into actionable technical solutions.",
+  "competencies": [
+    "Field Application Engineering: Radar SoCs, system bring-up, technical troubleshooting, customer/application support",
+    "Radar Systems: Automotive FMCW radar, radar signal chain, MIMO/DOA, detection, angle processing, radar performance",
+    "System Integration & Validation: HW/SW integration, RF validation, automated testing, regression, root-cause analysis",
+    "Radar Algorithms & DSP: Range/Doppler/angle processing, FFT, CFAR, beamforming, sidelobe suppression, noise estimation",
+    "Automation & Software: Python, MATLAB, Embedded C, C, machine learning, edge AI, validation orchestration and data analysis",
+    "RF / Lab Engineering: Radar evaluation boards, signal generators, spectrum analyzers, oscilloscopes, power supplies, power meters",
+    "Architecture & Technical Leadership: Radar processing chains, software/module architecture, multi-core systems, memory optimization",
+    "Technical Communication: Cross-functional engineering, customer issue analysis, workshops, demonstrations and R&D coordination"
+  ],
+  "experience": [
+    {
+      "company": "NXP Semiconductors",
+      "role": "System Integration & Validation Engineer",
+      "dates": "Mar 2026 – Present",
+      "location": "Munich, Germany",
+      "bullets": [
+        "Develop automated system-level validation for automotive radar using an internal framework based mainly on Python, integrated with MATLAB and Java.",
+        "Build validation workflows spanning radar configurations, temperature, power cycling, instrument settings and repeated execution, including runs with thousands of iterations.",
+        "Use MATLAB for signal processing, measurement analysis, validation logic and plotting; use Java integration for radar-board and laboratory-instrument automation.",
+        "Automate RF/lab equipment including R&S SMA100B, R&S FSW85, RTA2064, Agilent 33250A, power meters and LAN-controlled power supplies, depending on the test setup.",
+        "Completed RX Filter Shaping validation and additional validation work covering Supply Ripple, Group/Chip-to-Chip Delay and Phase Rotation; currently working on Range-Doppler accuracy/separation.",
+        "Extend the validation environment with reusable instrument-control interfaces, automated pass/fail evaluation and CVDB (PostgreSQL) result reporting for traceability and analysis."
+      ]
+    },
+    {
+      "company": "Calterah GmbH",
+      "role": "Field Application Engineer / Radar System Engineer",
+      "dates": "Sep 2024 – Feb 2026",
+      "location": "Munich, Germany",
+      "bullets": [
+        "Supported radar SoC application and system bring-up, debugging issues across acquisition, calibration, detection and angle-estimation functions.",
+        "Investigated HW/SW integration problems and supported resolution of customer-reported radar-system issues across the processing pipeline and SoC features.",
+        "Bridged application needs and China-based R&D, translating field feedback and technical requirements into engineering discussions and product actions.",
+        "Delivered hands-on technical support, workshops and product demonstrations, including radar SoC demonstration at Electronica 2024.",
+        "Worked on SoC/system topics including Secure Boot, OTP, Ethernet, Functional Safety and cybersecurity."
+      ]
+    },
+    {
+      "company": "Fusionride GmbH",
+      "role": "Senior Radar Signal Processing Engineer / Radar Expert",
+      "dates": "Feb 2022 – Sep 2024",
+      "location": "Germany",
+      "bullets": [
+        "Architected and developed radar signal-processing chains in MATLAB covering range, Doppler and angle processing, with MIMO and beamforming.",
+        "Worked across radar algorithm architecture, software architecture, memory mapping, memory optimization, multi-core architecture, module integration and system debugging.",
+        "Developed antenna/radar analysis tools for beam patterns, sidelobes and virtual-array evaluation, reducing analysis effort from approximately one week to one day.",
+        "Contributed to development of a first 4×4 corner-radar prototype and subsequent 6×8 front-radar development; provided technical direction and module-level leadership."
+      ]
+    },
+    {
+      "company": "Continental Automotive",
+      "role": "Technical Specialist / Radar Algorithm Engineer",
+      "dates": "Jul 2018 – Feb 2022",
+      "location": "Bengaluru, India",
+      "bullets": [
+        "Developed radar signal-processing and algorithm modules for automotive FMCW radar systems.",
+        "Implemented CFAR, elevation MIMO, sidelobe suppression and noise-estimation functions and supported system-level optimization.",
+        "Developed radar processing modules across ARM Cortex-M, DSP and MATLAB environments with runtime/memory optimization and root-cause analysis.",
+        "Contributed to production radar validation; reported functional coverage of 99.92% for a Gen5 radar validation activity."
+      ]
+    },
+    {
+      "company": "Wavelet Technologies / Sci-com Software",
+      "role": "Project Engineer – Radar DSP / Firmware",
+      "dates": "Jul 2015 – Jul 2018",
+      "location": "Pune, India",
+      "bullets": [
+        "Developed embedded firmware and DSP software for pulse / wind-profiler radar systems.",
+        "Participated in radar development, debugging and product-lifecycle activities."
+      ]
+    }
+  ],
+  "selected_nxp_experience": [
+    "Supply Ripple Validation: automated RX/TX characterization using controlled ripple injection, ADC/Range-FFT analysis, spectrum-analyzer sideband measurements, automated pass/fail decisions and database reporting.",
+    "Group / Chip-to-Chip Delay: synchronized ADC acquisition, FFT without windowing, frequency-domain cross-correlation, chirp averaging, phase extraction/unwrapping and linear phase fitting.",
+    "Phase Rotation: fine chirp-to-chirp phase-step validation and INL/DNL-style step-error evaluation against defined limits.",
+    "Validation Architecture: requirement-derived Excel inputs, layered orchestration, instrument-control interfaces, signal-processing analysis, regression execution and CVDB traceability."
+  ],
+  "technical_skills": {
+    "Radar": "Automotive FMCW, pulse radar, radar SoCs, signal processing, MIMO, DOA, beamforming, CFAR, range/Doppler/angle processing, antenna analysis",
+    "Application / System": "System integration, radar validation, RF validation, system bring-up, HW/SW debugging, root-cause analysis, cross-functional support",
+    "Programming": "Python, MATLAB, Embedded C, C, Java",
+    "RF / Instruments": "R&S SMA100B, R&S FSW85, RTA2064, Agilent 33250A, oscilloscopes, power meters, LAN-controlled power supplies",
+    "Architecture": "Radar processing chains, software/module architecture, ARM Cortex-M, DSP, multi-core architecture, memory mapping/optimization",
+    "Data / Automation": "Automation frameworks, test orchestration, automated measurement, pass/fail evaluation, CVDB, PostgreSQL"
+  },
+  "education": [
+    {
+      "degree": "M.E. Embedded Systems & VLSI",
+      "institution": "Savitribai Phule Pune University",
+      "year": "2016",
+      "grade": "CGPA 8.5/10"
+    },
+    {
+      "degree": "B.E. Electronics & Telecommunication",
+      "institution": "Savitribai Phule Pune University",
+      "year": "2013",
+      "grade": "CGPA 8.5/10"
+    }
+  ],
+  "publications_and_achievements": [
+    "IEEE Conference Paper: \"Comparative study and implementation … wind profiler radar\", 2017.",
+    "Developed a first 4×4 corner-radar prototype with real-time detections within one year at Fusionride.",
+    "Received a monetary award for a tool that accelerated initial radar signal-processing bring-up and reduced engineering effort."
+  ],
+  "languages": [
+    "English",
+    "Hindi",
+    "Marathi",
+    "German"
+  ]
+}
