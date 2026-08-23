@@ -113,7 +113,6 @@ class ResumeApp:
 
         self.data = INITIAL_DATA
         self.preview_images = []
-        self.preview_scale = 1.0  # zoom multiplier for PDF preview
 
         self.create_widgets()
         self.populate_form()
@@ -127,21 +126,10 @@ class ResumeApp:
         ttk.Button(top_frame, text="Save JSON", command=self.save_json).pack(side=tk.LEFT, padx=5)
         
         ttk.Button(top_frame, text="Update Live Preview", command=self.update_live_preview).pack(side=tk.LEFT, padx=15)
-        # Zoom controls for PDF preview
-        ttk.Label(top_frame, text="   Zoom:").pack(side=tk.LEFT)
-        ttk.Button(top_frame, text="-", width=3, command=self._zoom_out).pack(side=tk.LEFT)
-        self.zoom_label = ttk.Label(top_frame, text="100%")
-        self.zoom_label.pack(side=tk.LEFT, padx=4)
-        ttk.Button(top_frame, text="+", width=3, command=self._zoom_in).pack(side=tk.LEFT)
-        ttk.Button(top_frame, text="Reset", command=self._zoom_reset).pack(side=tk.LEFT, padx=(4,12))
         self.page_label = ttk.Label(top_frame, text="Total Pages: --", font=("Helvetica", 10, "bold"), foreground="navy")
         self.page_label.pack(side=tk.LEFT, padx=5)
 
         ttk.Button(top_frame, text="Export PDF", command=self.generate_pdf).pack(side=tk.RIGHT, padx=5)
-        # Filename entry for export
-        ttk.Label(top_frame, text="  File name:").pack(side=tk.RIGHT)
-        self.filename_entry = ttk.Entry(top_frame, width=30)
-        self.filename_entry.pack(side=tk.RIGHT, padx=(0,8))
 
         # PanedWindow: Split Left (Form Editor) and Right (PDF Preview)
         paned = ttk.PanedWindow(self.root, orient=tk.HORIZONTAL)
@@ -180,25 +168,12 @@ class ResumeApp:
         self.preview_canvas.pack(side="left", fill="both", expand=True)
         self.preview_scrollbar.pack(side="right", fill="y")
 
-        # Mouse wheel bindings for smooth scrolling when cursor is over a pane
-        self.preview_frame.bind("<Enter>", lambda e: self.preview_canvas.bind_all("<MouseWheel>", self._on_preview_mousewheel))
-        self.preview_frame.bind("<Leave>", lambda e: self.preview_canvas.unbind_all("<MouseWheel>"))
-        self.scrollable_frame.bind("<Enter>", lambda e: self.editor_canvas.bind_all("<MouseWheel>", self._on_editor_mousewheel))
-        self.scrollable_frame.bind("<Leave>", lambda e: self.editor_canvas.unbind_all("<MouseWheel>"))
-        # Ctrl+Wheel zoom on preview when cursor over preview
-        self.preview_frame.bind("<Enter>", lambda e: self.preview_canvas.bind_all("<Control-MouseWheel>", self._on_ctrl_wheel_preview))
-        self.preview_frame.bind("<Leave>", lambda e: self.preview_canvas.unbind_all("<Control-MouseWheel>"))
-
-        # Global undo/redo bindings (Text widgets)
-        self.root.bind_all("<Control-z>", self._global_undo)
-        self.root.bind_all("<Control-y>", self._global_redo)
-
     def populate_form(self):
         for w in self.scrollable_frame.winfo_children():
             w.destroy()
 
         # Header
-        self._add_section_header(self.scrollable_frame, "HEADER INFO", lambda: self._open_header_editor())
+        ttk.Label(self.scrollable_frame, text="HEADER INFO", font=("Helvetica", 11, "bold")).pack(anchor="w", pady=(5, 5))
         hdr = self.data.get("header", {})
         self.hdr_entries = {}
         for key in ["name", "title", "location", "phone", "email", "linkedin"]:
@@ -211,28 +186,23 @@ class ResumeApp:
             self.hdr_entries[key] = ent
 
         # Summary
-        self._add_section_header(self.scrollable_frame, "PROFESSIONAL SUMMARY", lambda: self._open_text_editor("summary", "Professional Summary"))
-        self.summary_text = tk.Text(self.scrollable_frame, width=70, height=5, undo=True)
+        ttk.Label(self.scrollable_frame, text="PROFESSIONAL SUMMARY", font=("Helvetica", 11, "bold")).pack(anchor="w", pady=(15, 5))
+        self.summary_text = tk.Text(self.scrollable_frame, width=70, height=5)
         self.summary_text.insert("1.0", self.data.get("summary", ""))
         self.summary_text.pack(anchor="w")
 
         # Core Competencies (One bullet per line for fast AI paste)
-        self._add_section_header(self.scrollable_frame, "CORE COMPETENCIES (One bullet point per line)", lambda: self._open_text_editor("competencies", "Core Competencies"))
-        self.comp_text = tk.Text(self.scrollable_frame, width=70, height=6, undo=True)
+        ttk.Label(self.scrollable_frame, text="CORE COMPETENCIES (One bullet point per line)", font=("Helvetica", 11, "bold")).pack(anchor="w", pady=(15, 5))
+        self.comp_text = tk.Text(self.scrollable_frame, width=70, height=6)
         self.comp_text.insert("1.0", "\n".join(self.data.get("competencies", [])))
         self.comp_text.pack(anchor="w")
 
         # Work Experience
-        self._add_section_header(self.scrollable_frame, "PROFESSIONAL EXPERIENCE", lambda: messagebox.showinfo("Info", "Use the Open button on each job to maximize."))
+        ttk.Label(self.scrollable_frame, text="PROFESSIONAL EXPERIENCE", font=("Helvetica", 11, "bold")).pack(anchor="w", pady=(15, 5))
         self.work_entries = []
         for job in self.data.get("experience", []):
             jf = ttk.LabelFrame(self.scrollable_frame, text=job.get("company", "Company"), padding=8)
             jf.pack(fill=tk.X, pady=5)
-
-            # Open (maximize) button for this job section
-            btn_frame = ttk.Frame(jf)
-            btn_frame.pack(fill=tk.X)
-            ttk.Button(btn_frame, text="Open", width=6, command=lambda j=job, jf=jf: self._open_job_editor(j, jf)).pack(side=tk.RIGHT)
 
             r1 = ttk.Frame(jf); r1.pack(fill=tk.X, pady=2)
             ttk.Label(r1, text="Company:").pack(side=tk.LEFT)
@@ -245,26 +215,26 @@ class ResumeApp:
             m_e = ttk.Entry(r2, width=50); m_e.insert(0, job.get("meta", "")); m_e.pack(side=tk.LEFT, padx=5)
 
             ttk.Label(jf, text="Bullets (One per line):").pack(anchor="w", pady=(4, 2))
-            b_t = tk.Text(jf, width=65, height=5, undo=True)
+            b_t = tk.Text(jf, width=65, height=5)
             b_t.insert("1.0", "\n".join(job.get("bullets", [])))
             b_t.pack(anchor="w")
 
             self.work_entries.append({"company": c_e, "role": r_e, "meta": m_e, "bullets": b_t})
 
         # Education
-        self._add_section_header(self.scrollable_frame, "EDUCATION (One line per entry)", lambda: self._open_text_editor("education", "Education"))
-        self.edu_text = tk.Text(self.scrollable_frame, width=70, height=3, undo=True)
+        ttk.Label(self.scrollable_frame, text="EDUCATION (One line per entry)", font=("Helvetica", 11, "bold")).pack(anchor="w", pady=(15, 5))
+        self.edu_text = tk.Text(self.scrollable_frame, width=70, height=3)
         self.edu_text.insert("1.0", "\n".join(self.data.get("education", [])))
         self.edu_text.pack(anchor="w")
 
         # Publications
-        self._add_section_header(self.scrollable_frame, "PUBLICATIONS & ACHIEVEMENTS", lambda: self._open_text_editor("publications_and_achievements", "Publications & Achievements"))
-        self.achieve_text = tk.Text(self.scrollable_frame, width=70, height=3, undo=True)
+        ttk.Label(self.scrollable_frame, text="PUBLICATIONS & ACHIEVEMENTS", font=("Helvetica", 11, "bold")).pack(anchor="w", pady=(15, 5))
+        self.achieve_text = tk.Text(self.scrollable_frame, width=70, height=3)
         self.achieve_text.insert("1.0", "\n".join(self.data.get("publications_and_achievements", [])))
         self.achieve_text.pack(anchor="w")
 
         # Languages
-        self._add_section_header(self.scrollable_frame, "LANGUAGES", lambda: self._open_text_editor("languages", "Languages"))
+        ttk.Label(self.scrollable_frame, text="LANGUAGES", font=("Helvetica", 11, "bold")).pack(anchor="w", pady=(15, 5))
         self.lang_entry = ttk.Entry(self.scrollable_frame, width=70)
         self.lang_entry.insert(0, " | ".join(self.data.get("languages", [])))
         self.lang_entry.pack(anchor="w", pady=(0, 15))
@@ -380,17 +350,12 @@ class ResumeApp:
             # Render pages with PyMuPDF directly to Tkinter images
             for idx in range(num_pages):
                 page = pdf_doc.load_page(idx)
-                # Render page at chosen resolution for sharp text (apply preview_scale)
-                base = 1.5
-                scale = base * self.preview_scale
-                pix = page.get_pixmap(matrix=fitz.Matrix(scale, scale))
+                # Render page at 1.5x resolution for sharp text
+                pix = page.get_pixmap(matrix=fitz.Matrix(1.5, 1.5))
                 img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
 
                 # Resize image for preview pane display
-                # when zooming, cap thumbnail size but respect zoom for clarity
-                max_w = int(850 * self.preview_scale)
-                max_h = int(1200 * self.preview_scale)
-                img.thumbnail((max_w, max_h), Image.Resampling.LANCZOS)
+                img.thumbnail((550, 750), Image.Resampling.LANCZOS)
                 photo = ImageTk.PhotoImage(img)
                 self.preview_images.append(photo)
 
@@ -405,183 +370,6 @@ class ResumeApp:
         except Exception as e:
             self.page_label.config(text=f"Total Pages: Error ({e})")
 
-    # --- Mouse wheel handlers ---
-    def _on_preview_mousewheel(self, event):
-        # Windows: event.delta is multiple of 120
-        move = int(-1 * (event.delta / 120))
-        self.preview_canvas.yview_scroll(move, "units")
-
-    def _on_ctrl_wheel_preview(self, event):
-        # Ctrl + MouseWheel: zoom in/out
-        if event.delta > 0:
-            self._zoom_in()
-        else:
-            self._zoom_out()
-        return "break"
-
-    def _on_editor_mousewheel(self, event):
-        move = int(-1 * (event.delta / 120))
-        self.editor_canvas.yview_scroll(move, "units")
-
-    def _global_undo(self, event):
-        w = event.widget
-        try:
-            if isinstance(w, tk.Text):
-                w.edit_undo()
-                return "break"
-        except Exception:
-            pass
-
-    def _global_redo(self, event):
-        w = event.widget
-        try:
-            if isinstance(w, tk.Text):
-                w.edit_redo()
-                return "break"
-        except Exception:
-            pass
-
-    # --- Zoom controls ---
-    def _zoom_in(self):
-        self.preview_scale = min(self.preview_scale + 0.1, 3.0)
-        self.zoom_label.config(text=f"{int(self.preview_scale*100)}%")
-        self.update_live_preview()
-
-    def _zoom_out(self):
-        self.preview_scale = max(self.preview_scale - 0.1, 0.3)
-        self.zoom_label.config(text=f"{int(self.preview_scale*100)}%")
-        self.update_live_preview()
-
-    def _zoom_reset(self):
-        self.preview_scale = 1.0
-        self.zoom_label.config(text="100%")
-        self.update_live_preview()
-
-    # --- Section maximize / popup editors ---
-    def _add_section_header(self, parent, text, open_callback):
-        f = ttk.Frame(parent)
-        f.pack(fill=tk.X, pady=(5, 2))
-        ttk.Label(f, text=text, font=("Helvetica", 11, "bold")).pack(side=tk.LEFT, anchor="w")
-        ttk.Button(f, text="Open", command=open_callback).pack(side=tk.RIGHT)
-
-    def _open_text_editor(self, key, title):
-        # key maps to self.data keys; show a large Text widget and update on close
-        top = tk.Toplevel(self.root)
-        top.title(title)
-        top.geometry("800x600")
-        txt = tk.Text(top, wrap=tk.WORD)
-        # fill with current content
-        if key == "competencies":
-            txt.insert("1.0", "\n".join(self.data.get(key, [])))
-        elif key == "languages":
-            txt.insert("1.0", "\n".join(self.data.get(key, [])))
-        else:
-            val = self.data.get(key, "")
-            if isinstance(val, list):
-                txt.insert("1.0", "\n".join(val))
-            else:
-                txt.insert("1.0", val)
-        txt.pack(fill=tk.BOTH, expand=True)
-
-        def save_and_close():
-            content = txt.get("1.0", tk.END).strip()
-            if key == "competencies":
-                self.comp_text.delete("1.0", tk.END)
-                self.comp_text.insert("1.0", content)
-            elif key == "languages":
-                self.lang_entry.delete(0, tk.END)
-                self.lang_entry.insert(0, " | ".join([l.strip() for l in content.splitlines() if l.strip()]))
-            elif key == "education":
-                self.edu_text.delete("1.0", tk.END)
-                self.edu_text.insert("1.0", content)
-            elif key == "publications_and_achievements":
-                self.achieve_text.delete("1.0", tk.END)
-                self.achieve_text.insert("1.0", content)
-            elif key == "summary":
-                self.summary_text.delete("1.0", tk.END)
-                self.summary_text.insert("1.0", content)
-            else:
-                # generic replace
-                if isinstance(self.data.get(key, None), list):
-                    # update relevant widget if present
-                    pass
-            # reflect in data and preview
-            self.data = self.extract_form_data()
-            self.update_live_preview()
-            top.destroy()
-
-        btn = ttk.Button(top, text="Save & Close", command=save_and_close)
-        btn.pack(pady=6)
-
-    def _open_header_editor(self):
-        top = tk.Toplevel(self.root)
-        top.title("Header Editor")
-        top.geometry("700x300")
-        entries = {}
-        hdr = self.extract_form_data().get("header", {})
-        for key in ["name", "title", "location", "phone", "email", "linkedin"]:
-            f = ttk.Frame(top)
-            f.pack(fill=tk.X, pady=3, padx=6)
-            ttk.Label(f, text=f"{key.capitalize()}:", width=12).pack(side=tk.LEFT)
-            ent = ttk.Entry(f)
-            ent.insert(0, hdr.get(key, ""))
-            ent.pack(side=tk.LEFT, fill=tk.X, expand=True)
-            entries[key] = ent
-
-        def save_hdr():
-            for k, e in entries.items():
-                self.hdr_entries[k].delete(0, tk.END)
-                self.hdr_entries[k].insert(0, e.get())
-            self.data = self.extract_form_data()
-            self.update_live_preview()
-            top.destroy()
-
-        ttk.Button(top, text="Save & Close", command=save_hdr).pack(pady=6)
-
-    def _open_job_editor(self, job, parent_frame):
-        # find index of job in data
-        idx = None
-        for i, j in enumerate(self.data.get("experience", [])):
-            if j.get("company") == job.get("company") and j.get("role") == job.get("role"):
-                idx = i
-                break
-        if idx is None:
-            messagebox.showerror("Error", "Could not locate the job entry to edit.")
-            return
-
-        top = tk.Toplevel(self.root)
-        top.title(job.get("company", "Job Editor"))
-        top.geometry("800x500")
-
-        f1 = ttk.Frame(top); f1.pack(fill=tk.X, pady=4, padx=6)
-        ttk.Label(f1, text="Company:", width=12).pack(side=tk.LEFT)
-        comp_e = ttk.Entry(f1); comp_e.insert(0, job.get("company", "")); comp_e.pack(side=tk.LEFT, fill=tk.X, expand=True)
-
-        f2 = ttk.Frame(top); f2.pack(fill=tk.X, pady=4, padx=6)
-        ttk.Label(f2, text="Role:", width=12).pack(side=tk.LEFT)
-        role_e = ttk.Entry(f2); role_e.insert(0, job.get("role", "")); role_e.pack(side=tk.LEFT, fill=tk.X, expand=True)
-
-        f3 = ttk.Frame(top); f3.pack(fill=tk.X, pady=4, padx=6)
-        ttk.Label(f3, text="Meta:", width=12).pack(side=tk.LEFT)
-        meta_e = ttk.Entry(f3); meta_e.insert(0, job.get("meta", "")); meta_e.pack(side=tk.LEFT, fill=tk.X, expand=True)
-
-        ttk.Label(top, text="Bullets (one per line):").pack(anchor="w", padx=6)
-        bullets_txt = tk.Text(top, height=12)
-        bullets_txt.insert("1.0", "\n".join(job.get("bullets", [])))
-        bullets_txt.pack(fill=tk.BOTH, expand=True, padx=6, pady=4)
-
-        def save_job():
-            self.data["experience"][idx]["company"] = comp_e.get().strip()
-            self.data["experience"][idx]["role"] = role_e.get().strip()
-            self.data["experience"][idx]["meta"] = meta_e.get().strip()
-            self.data["experience"][idx]["bullets"] = [b.strip() for b in bullets_txt.get("1.0", tk.END).strip().splitlines() if b.strip()]
-            # repopulate form to reflect updated labels and values
-            self.populate_form()
-            self.update_live_preview()
-            top.destroy()
-
-        ttk.Button(top, text="Save & Close", command=save_job).pack(pady=6)
-
     def load_json(self):
         filepath = filedialog.askopenfilename(filetypes=[("JSON Files", "*.json")])
         if filepath:
@@ -590,44 +378,19 @@ class ResumeApp:
             self.populate_form()
 
     def save_json(self):
-        name = self.filename_entry.get().strip() if hasattr(self, 'filename_entry') else ""
-        if name:
-            folder = filedialog.askdirectory(title="Choose folder to save JSON")
-            if folder:
-                filepath = f"{folder}/{name}.json"
-            else:
-                return
-        else:
-            filepath = filedialog.asksaveasfilename(defaultextension=".json", filetypes=[("JSON Files", "*.json")])
-
+        filepath = filedialog.asksaveasfilename(defaultextension=".json", filetypes=[("JSON Files", "*.json")])
         if filepath:
             with open(filepath, 'w', encoding='utf-8') as f:
                 json.dump(self.extract_form_data(), f, indent=2)
 
     def generate_pdf(self):
-        name = self.filename_entry.get().strip() if hasattr(self, 'filename_entry') else ""
-        if name:
-            folder = filedialog.askdirectory(title="Choose folder to save PDF and JSON")
-            if not folder:
-                return
-            pdf_path = f"{folder}/{name}.pdf"
-            json_path = f"{folder}/{name}.json"
+        filepath = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF Files", "*.pdf")])
+        if filepath:
             pdf_bytes = self.build_pdf_bytes()
-            with open(pdf_path, "wb") as f:
+            with open(filepath, "wb") as f:
                 f.write(pdf_bytes)
-            # also save JSON representation
-            with open(json_path, 'w', encoding='utf-8') as f:
-                json.dump(self.extract_form_data(), f, indent=2)
             self.update_live_preview()
-            messagebox.showinfo("Success", f"Saved {name}.pdf and {name}.json to {folder}")
-        else:
-            filepath = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF Files", "*.pdf")])
-            if filepath:
-                pdf_bytes = self.build_pdf_bytes()
-                with open(filepath, "wb") as f:
-                    f.write(pdf_bytes)
-                self.update_live_preview()
-                messagebox.showinfo("Success", "PDF exported successfully!")
+            messagebox.showinfo("Success", "PDF exported successfully!")
 
 if __name__ == "__main__":
     root = tk.Tk()

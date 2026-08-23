@@ -1,0 +1,97 @@
+{
+  "header": {
+    "name": "Nikhil Ganpat Navghade",
+    "title": "FIELD APPLICATION ENGINEER | SEMICONDUCTOR SYSTEMS | CUSTOMER ENGINEERING",
+    "location": "Munich, Germany",
+    "phone": "+49 163 5454172",
+    "email": "nikhil.nawaghadej@gmail.com",
+    "linkedin": "linkedin.com/in/nikhil-navghade/"
+  },
+  "summary": "Semiconductor and Customer Engineering professional with 12+ years of experience spanning semiconductor products, radar SoCs, RF/mixed-signal systems, embedded platforms, system integration, validation, and customer-facing engineering.\n\nCurrently working on semiconductor radar products at NXP, with previous experience as FAE & Technical Sales at Calterah, supporting customers from product selection and system architecture through integration, validation, troubleshooting, and deployment.\n\nStrong ability to translate customer requirements into technical solutions and coordinate issues across customers, R&D, applications, product, quality, and marketing teams. Experienced in semiconductor product evaluation, system bring-up, laboratory characterization, automated validation, root-cause analysis, technical presentations, and customer workshops.",
+  "competencies": [
+    "FAE & Customer Engineering: Customer requirements | Technical support | Product evaluation | System architecture | Product integration | Bring-up & validation | Troubleshooting | Root-cause analysis | Technical workshops | Customer presentations",
+    "Semiconductor Systems: Semiconductor SoCs | Mixed-signal systems | RF front ends | ADC/DAC | Embedded systems | Interfaces | System-level validation | Product qualification",
+    "Technical Marketing & Business Support: Customer technical engagement | Product demonstrations | Requirement gathering | Technical solution positioning | Customer issue tracking | Product feedback | R&D coordination | Industry events",
+    "Software & Tools: Python | MATLAB/Simulink | Embedded C | Java | C++ | Git | Test automation | Data analysis",
+    "Laboratory & Validation: Oscilloscopes | Spectrum analyzers | Signal generators | Power meters | Attenuators | Frequency multipliers | RF characterization | Automated measurement systems",
+    "Signal Processing: FMCW & pulsed radar | FFT | Digital filtering | Doppler | MIMO | Beamforming | CFAR | Detection | Angle estimation"
+  ],
+  "experience": [
+    {
+      "company": "NXP Semiconductors",
+      "role": "System Integration & Validation Engineer",
+      "meta": "via ACONEXT / Hays | Munich, Germany | 2026 – Present",
+      "bullets": [
+        "Perform system- and board-level validation of semiconductor radar products from laboratory characterization through system qualification.",
+        "Translate product requirements into validation strategies, automated test cases, measurement procedures, and performance metrics.",
+        "Develop Python and Java automation frameworks covering 100+ validation scenarios, improving repeatability and validation efficiency.",
+        "Integrate signal generators, attenuators, frequency multipliers, power meters, and other laboratory equipment into automated semiconductor validation environments.",
+        "Perform RF and system characterization using laboratory measurements and MATLAB-based analysis.",
+        "Diagnose device and system-level anomalies by correlating requirements, measurements, hardware behavior, and software analysis.",
+        "Collaborate with hardware, software, applications, and R&D teams to resolve integration and validation issues."
+      ]
+    },
+    {
+      "company": "Calterah GmbH",
+      "role": "FAE & Technical Sales",
+      "meta": "Munich, Germany | Sep 2024 – Feb 2026",
+      "bullets": [
+        "Acted as a technical advisor to semiconductor customers throughout the product lifecycle, from architecture and product selection through integration, validation, troubleshooting, and deployment.",
+        "Gathered customer requirements and translated them into technical solutions involving RF front-end behavior, ADC sampling, DSP processing, interfaces, and end-to-end system performance.",
+        "Supported customer system bring-up, integration, validation, performance optimization, and technical issue resolution.",
+        "Diagnosed complex RF, mixed-signal, hardware/software, and DSP interaction issues, coordinating investigations between customers and internal R&D.",
+        "Led root-cause analysis of issues involving secure boot, OTP programming, functional-safety configuration, and Ethernet interfaces.",
+        "Delivered technical workshops, product demonstrations, and customer presentations, including at Electronica 2024.",
+        "Collaborated with applications, marketing, product, quality, and R&D teams to convert field requirements into product feedback and improvements.",
+        "Supported customers through technical decision-making and semiconductor product integration."
+      ]
+    },
+    {
+      "company": "Fusionride GmbH",
+      "role": "Senior Radar Signal Processing Engineer",
+      "meta": "Munich, Germany / India | Feb 2022 – Sep 2024",
+      "bullets": [
+        "Architected complete 1D–4D radar processing chains using MATLAB/Simulink, covering FFT, MIMO, beamforming, detection, and signal-processing modules.",
+        "Designed multi-core system architecture with focus on memory mapping, computational efficiency, runtime performance, and system integration.",
+        "Developed antenna evaluation tools covering beam patterns, sidelobes, and virtual-array analysis, reducing analysis time from approximately 1 week to 1 day.",
+        "Delivered the first 4×4 corner radar prototype with real-time detections within one year and contributed to 6×8 front-radar development.",
+        "Led technical decisions covering algorithm architecture, system integration, validation, and performance optimization."
+      ]
+    },
+    {
+      "company": "Continental Automotive",
+      "role": "Technical Specialist, Radar",
+      "meta": "Bengaluru, India | Jul 2018 – Feb 2022",
+      "bullets": [
+        "Developed and validated signal-processing modules for automotive FMCW radar semiconductor/system platforms, achieving 99.92% functional coverage for Gen5 radar validation.",
+        "Implemented and optimized CFAR, elevation MIMO, sidelobe suppression, and noise-estimation algorithms.",
+        "Developed MATLAB and Embedded C modules for radar signal-processing pipelines and embedded implementation.",
+        "Performed system-level performance analysis, debugging, and validation of complex RF/DSP systems."
+      ]
+    },
+    {
+      "company": "Wavelet Technologies",
+      "role": "Project Engineer",
+      "meta": "Pune, India | Jul 2015 – Jul 2018",
+      "bullets": [
+        "Developed embedded firmware and signal-processing functionality for pulse wind-profile radar receiver systems.",
+        "Contributed to algorithm implementation, embedded development, laboratory testing, debugging, and system integration."
+      ]
+    }
+  ],
+  "education": [
+    "M.E. — Embedded Systems & VLSI | Pune University | 2016 | CGPA: 8.54/10",
+    "B.E. — Electronics & Telecommunication | Pune University | 2013 | CGPA: 8.43/10"
+  ],
+  "publications_and_achievements": [
+    "Pioneered introduction of the first 4×4 corner radar product with real-time detections within one year at Fusionride.",
+    "Received a monetary award for developing an engineering tool that significantly accelerated initial radar signal-processing bring-up and analysis.",
+    "IEEE Conference Paper: Comparative Study and Implementation of Wind-Profiler Radar, 2017."
+  ],
+  "languages": [
+    "English",
+    "German",
+    "Hindi",
+    "Marathi"
+  ]
+}
