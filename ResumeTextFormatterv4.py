@@ -5,7 +5,7 @@ from tkinter import ttk, messagebox, filedialog
 
 from pypdf import PdfReader
 from PIL import Image, ImageTk
-import fitz  # PyMuPDF (Zero external dependencies)
+import pymupdf as fitz  # PyMuPDF (use recommended import to avoid deprecation warning)
 
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, HRFlowable
@@ -140,8 +140,9 @@ class ResumeApp:
         ttk.Button(top_frame, text="Export PDF", command=self.generate_pdf).pack(side=tk.RIGHT, padx=5)
         # Filename entry for export
         ttk.Label(top_frame, text="  File name:").pack(side=tk.RIGHT)
-        self.filename_entry = ttk.Entry(top_frame, width=30)
+        self.filename_entry = tk.Entry(top_frame, width=30)
         self.filename_entry.pack(side=tk.RIGHT, padx=(0,8))
+        ttk.Button(top_frame, text="Open JSON Editor", command=self._open_json_editor).pack(side=tk.RIGHT, padx=(5,8))
 
         # PanedWindow: Split Left (Form Editor) and Right (PDF Preview)
         paned = ttk.PanedWindow(self.root, orient=tk.HORIZONTAL)
@@ -189,9 +190,11 @@ class ResumeApp:
         self.preview_frame.bind("<Enter>", lambda e: self.preview_canvas.bind_all("<Control-MouseWheel>", self._on_ctrl_wheel_preview))
         self.preview_frame.bind("<Leave>", lambda e: self.preview_canvas.unbind_all("<Control-MouseWheel>"))
 
-        # Global undo/redo bindings (Text widgets)
+        # Global undo/redo bindings (Text and Entry widgets)
         self.root.bind_all("<Control-z>", self._global_undo)
         self.root.bind_all("<Control-y>", self._global_redo)
+        # Ctrl+S to save JSON quickly
+        self.root.bind_all("<Control-s>", self._global_save_json)
 
     def populate_form(self):
         for w in self.scrollable_frame.winfo_children():
@@ -205,7 +208,7 @@ class ResumeApp:
             f = ttk.Frame(self.scrollable_frame)
             f.pack(fill=tk.X, pady=2)
             ttk.Label(f, text=f"{key.capitalize()}:", width=12).pack(side=tk.LEFT)
-            ent = ttk.Entry(f, width=60)
+            ent = tk.Entry(f, width=60)
             ent.insert(0, hdr.get(key, ""))
             ent.pack(side=tk.LEFT, fill=tk.X, expand=True)
             self.hdr_entries[key] = ent
@@ -236,13 +239,13 @@ class ResumeApp:
 
             r1 = ttk.Frame(jf); r1.pack(fill=tk.X, pady=2)
             ttk.Label(r1, text="Company:").pack(side=tk.LEFT)
-            c_e = ttk.Entry(r1, width=20); c_e.insert(0, job.get("company", "")); c_e.pack(side=tk.LEFT, padx=(5,10))
+            c_e = tk.Entry(r1, width=20); c_e.insert(0, job.get("company", "")); c_e.pack(side=tk.LEFT, padx=(5,10))
             ttk.Label(r1, text="Role:").pack(side=tk.LEFT)
-            r_e = ttk.Entry(r1, width=25); r_e.insert(0, job.get("role", "")); r_e.pack(side=tk.LEFT, padx=5)
+            r_e = tk.Entry(r1, width=25); r_e.insert(0, job.get("role", "")); r_e.pack(side=tk.LEFT, padx=5)
 
             r2 = ttk.Frame(jf); r2.pack(fill=tk.X, pady=2)
             ttk.Label(r2, text="Meta/Location:").pack(side=tk.LEFT)
-            m_e = ttk.Entry(r2, width=50); m_e.insert(0, job.get("meta", "")); m_e.pack(side=tk.LEFT, padx=5)
+            m_e = tk.Entry(r2, width=50); m_e.insert(0, job.get("meta", "")); m_e.pack(side=tk.LEFT, padx=5)
 
             ttk.Label(jf, text="Bullets (One per line):").pack(anchor="w", pady=(4, 2))
             b_t = tk.Text(jf, width=65, height=5, undo=True)
@@ -265,7 +268,7 @@ class ResumeApp:
 
         # Languages
         self._add_section_header(self.scrollable_frame, "LANGUAGES", lambda: self._open_text_editor("languages", "Languages"))
-        self.lang_entry = ttk.Entry(self.scrollable_frame, width=70)
+        self.lang_entry = tk.Entry(self.scrollable_frame, width=70)
         self.lang_entry.insert(0, " | ".join(self.data.get("languages", [])))
         self.lang_entry.pack(anchor="w", pady=(0, 15))
 
@@ -555,15 +558,15 @@ class ResumeApp:
 
         f1 = ttk.Frame(top); f1.pack(fill=tk.X, pady=4, padx=6)
         ttk.Label(f1, text="Company:", width=12).pack(side=tk.LEFT)
-        comp_e = ttk.Entry(f1); comp_e.insert(0, job.get("company", "")); comp_e.pack(side=tk.LEFT, fill=tk.X, expand=True)
+        comp_e = tk.Entry(f1); comp_e.insert(0, job.get("company", "")); comp_e.pack(side=tk.LEFT, fill=tk.X, expand=True)
 
         f2 = ttk.Frame(top); f2.pack(fill=tk.X, pady=4, padx=6)
         ttk.Label(f2, text="Role:", width=12).pack(side=tk.LEFT)
-        role_e = ttk.Entry(f2); role_e.insert(0, job.get("role", "")); role_e.pack(side=tk.LEFT, fill=tk.X, expand=True)
+        role_e = tk.Entry(f2); role_e.insert(0, job.get("role", "")); role_e.pack(side=tk.LEFT, fill=tk.X, expand=True)
 
         f3 = ttk.Frame(top); f3.pack(fill=tk.X, pady=4, padx=6)
         ttk.Label(f3, text="Meta:", width=12).pack(side=tk.LEFT)
-        meta_e = ttk.Entry(f3); meta_e.insert(0, job.get("meta", "")); meta_e.pack(side=tk.LEFT, fill=tk.X, expand=True)
+        meta_e = tk.Entry(f3); meta_e.insert(0, job.get("meta", "")); meta_e.pack(side=tk.LEFT, fill=tk.X, expand=True)
 
         ttk.Label(top, text="Bullets (one per line):").pack(anchor="w", padx=6)
         bullets_txt = tk.Text(top, height=12)
@@ -581,6 +584,69 @@ class ResumeApp:
             top.destroy()
 
         ttk.Button(top, text="Save & Close", command=save_job).pack(pady=6)
+
+    def _global_save_json(self, event=None):
+        # quick save JSON via Ctrl+S; reuse save_json logic
+        try:
+            self.save_json()
+        except Exception as e:
+            messagebox.showerror("Save Error", str(e))
+        return "break"
+
+    def _open_json_editor(self):
+        top = tk.Toplevel(self.root)
+        top.title("JSON Editor")
+        top.geometry("900x700")
+
+        # horizontal and vertical scrollbars
+        vbar = ttk.Scrollbar(top, orient=tk.VERTICAL)
+        hbar = ttk.Scrollbar(top, orient=tk.HORIZONTAL)
+        txt = tk.Text(top, wrap=tk.NONE, undo=True, xscrollcommand=hbar.set, yscrollcommand=vbar.set)
+        vbar.config(command=txt.yview)
+        hbar.config(command=txt.xview)
+        vbar.pack(side=tk.RIGHT, fill=tk.Y)
+        hbar.pack(side=tk.BOTTOM, fill=tk.X)
+        txt.pack(fill=tk.BOTH, expand=True)
+
+        # prefill with current data
+        try:
+            txt.delete("1.0", tk.END)
+            txt.insert("1.0", json.dumps(self.extract_form_data(), indent=2, ensure_ascii=False))
+        except Exception:
+            txt.insert("1.0", "{}")
+
+        btn_frame = ttk.Frame(top)
+        btn_frame.pack(fill=tk.X, pady=6)
+
+        def apply_json():
+            raw = txt.get("1.0", tk.END).strip()
+            if not raw:
+                messagebox.showwarning("Empty", "JSON text is empty.")
+                return
+            try:
+                parsed = json.loads(raw)
+            except Exception as e:
+                messagebox.showerror("JSON Error", f"Failed to parse JSON: {e}")
+                return
+            # Basic validation: must be a dict with expected keys optional
+            if not isinstance(parsed, dict):
+                messagebox.showerror("JSON Error", "Top-level JSON must be an object/dictionary.")
+                return
+            # update internal data and repopulate form
+            self.data = parsed
+            self.populate_form()
+            self.update_live_preview()
+            messagebox.showinfo("Applied", "JSON applied to form successfully.")
+
+        ttk.Button(btn_frame, text="Apply JSON", command=apply_json).pack(side=tk.LEFT, padx=6)
+        ttk.Button(btn_frame, text="Save JSON to file", command=lambda: self._save_text_to_file(txt)).pack(side=tk.LEFT, padx=6)
+        ttk.Button(btn_frame, text="Close", command=top.destroy).pack(side=tk.RIGHT, padx=6)
+
+    def _save_text_to_file(self, text_widget):
+        filepath = filedialog.asksaveasfilename(defaultextension=".json", filetypes=[("JSON Files", "*.json")])
+        if filepath:
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write(text_widget.get("1.0", tk.END))
 
     def load_json(self):
         filepath = filedialog.askopenfilename(filetypes=[("JSON Files", "*.json")])
