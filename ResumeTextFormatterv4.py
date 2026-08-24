@@ -142,18 +142,33 @@ class ResumeApp:
         ttk.Label(top_frame, text="  File name:").pack(side=tk.RIGHT)
         self.filename_entry = tk.Entry(top_frame, width=30)
         self.filename_entry.pack(side=tk.RIGHT, padx=(0,8))
-        ttk.Button(top_frame, text="Open JSON Editor", command=self._open_json_editor).pack(side=tk.RIGHT, padx=(5,8))
 
         # PanedWindow: Split Left (Form Editor) and Right (PDF Preview)
         paned = ttk.PanedWindow(self.root, orient=tk.HORIZONTAL)
         paned.pack(fill=tk.BOTH, expand=True)
 
-        # --- LEFT PANE (Editor) ---
+        # --- LEFT PANE (Editor + JSON tab) ---
         left_container = ttk.Frame(paned)
         paned.add(left_container, weight=1)
 
-        self.editor_canvas = tk.Canvas(left_container)
-        self.editor_scrollbar = ttk.Scrollbar(left_container, orient="vertical", command=self.editor_canvas.yview)
+        # Header for left pane with label and a side button to show JSON tab
+        left_header = ttk.Frame(left_container)
+        left_header.pack(fill=tk.X)
+        self.left_tab_label = ttk.Label(left_header, text="Main Tab", font=("Helvetica", 10, "bold"))
+        self.left_tab_label.pack(side=tk.LEFT, padx=6, pady=4)
+        ttk.Button(left_header, text="Show JSON", command=lambda: self._show_json_tab()).pack(side=tk.RIGHT, padx=6)
+
+        # Notebook containing main form and JSON diff/editor
+        self.left_notebook = ttk.Notebook(left_container)
+        self.main_tab = ttk.Frame(self.left_notebook)
+        self.json_tab = ttk.Frame(self.left_notebook)
+        self.left_notebook.add(self.main_tab, text="Main")
+        self.left_notebook.add(self.json_tab, text="JSON")
+        self.left_notebook.pack(fill=tk.BOTH, expand=True)
+
+        # --- Main form canvas inside the notebook ---
+        self.editor_canvas = tk.Canvas(self.main_tab)
+        self.editor_scrollbar = ttk.Scrollbar(self.main_tab, orient="vertical", command=self.editor_canvas.yview)
         self.scrollable_frame = ttk.Frame(self.editor_canvas, padding=15)
 
         self.scrollable_frame.bind("<Configure>", lambda e: self.editor_canvas.configure(scrollregion=self.editor_canvas.bbox("all")))
@@ -162,6 +177,21 @@ class ResumeApp:
 
         self.editor_canvas.pack(side="left", fill="both", expand=True)
         self.editor_scrollbar.pack(side="right", fill="y")
+
+        # --- JSON tab contents ---
+        self.json_text = tk.Text(self.json_tab, wrap=tk.NONE)
+        j_v = ttk.Scrollbar(self.json_tab, orient=tk.VERTICAL, command=self.json_text.yview)
+        j_h = ttk.Scrollbar(self.json_tab, orient=tk.HORIZONTAL, command=self.json_text.xview)
+        self.json_text.configure(yscrollcommand=j_v.set, xscrollcommand=j_h.set)
+        j_v.pack(side=tk.RIGHT, fill=tk.Y)
+        j_h.pack(side=tk.BOTTOM, fill=tk.X)
+        self.json_text.pack(fill=tk.BOTH, expand=True)
+
+        json_btn_frame = ttk.Frame(self.json_tab)
+        json_btn_frame.pack(fill=tk.X)
+        ttk.Button(json_btn_frame, text="Apply JSON to Form", command=self._apply_json_from_tab).pack(side=tk.LEFT, padx=6, pady=6)
+        ttk.Button(json_btn_frame, text="Save JSON to file", command=lambda: self._save_text_to_file(self.json_text)).pack(side=tk.LEFT, padx=6, pady=6)
+        ttk.Button(json_btn_frame, text="Back to Main", command=lambda: self.left_notebook.select(self.main_tab)).pack(side=tk.RIGHT, padx=6, pady=6)
 
         # --- RIGHT PANE (Live PDF Preview) ---
         right_container = ttk.Frame(paned)
@@ -367,53 +397,35 @@ class ResumeApp:
         return pdf_bytes
 
     def update_live_preview(self):
+        # If JSON tab exists, populate it and select
         try:
-            pdf_bytes = self.build_pdf_bytes()
-            
-            # Read PDF and get page count
-            pdf_doc = fitz.open(stream=pdf_bytes, filetype="pdf")
-            num_pages = len(pdf_doc)
-            self.page_label.config(text=f"Total Pages: {num_pages}")
-
-            # Clear old preview
-            for w in self.preview_frame.winfo_children():
-                w.destroy()
-            self.preview_images = []
-
-            # Render pages with PyMuPDF directly to Tkinter images
-            for idx in range(num_pages):
-                page = pdf_doc.load_page(idx)
-                # Render page at chosen resolution for sharp text (apply preview_scale)
-                base = 1.5
-                scale = base * self.preview_scale
-                pix = page.get_pixmap(matrix=fitz.Matrix(scale, scale))
-                img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
-
-                # Resize image for preview pane display
-                # when zooming, cap thumbnail size but respect zoom for clarity
-                max_w = int(850 * self.preview_scale)
-                max_h = int(1200 * self.preview_scale)
-                img.thumbnail((max_w, max_h), Image.Resampling.LANCZOS)
-                photo = ImageTk.PhotoImage(img)
-                self.preview_images.append(photo)
-
-                p_label = tk.Label(self.preview_frame, text=f"Page {idx + 1} of {num_pages}", font=("Helvetica", 9, "bold"), bg="#525659", fg="white")
-                p_label.pack(anchor="center", pady=(10, 2))
-
-                img_label = tk.Label(self.preview_frame, image=photo, bg="#525659")
-                img_label.pack(anchor="center", pady=(0, 10))
-
-            pdf_doc.close()
-
+            self.json_text.delete("1.0", tk.END)
+            self.json_text.insert("1.0", json.dumps(self.extract_form_data(), indent=2, ensure_ascii=False))
+            self.left_notebook.select(self.json_tab)
         except Exception as e:
-            self.page_label.config(text=f"Total Pages: Error ({e})")
+            messagebox.showerror("JSON Editor Error", str(e))
 
-    # --- Mouse wheel handlers ---
-    def _on_preview_mousewheel(self, event):
-        # Windows: event.delta is multiple of 120
-        move = int(-1 * (event.delta / 120))
-        self.preview_canvas.yview_scroll(move, "units")
+    def _show_json_tab(self):
+        # Alias for button
+        self._open_json_editor()
 
+    def _apply_json_from_tab(self):
+        raw = self.json_text.get("1.0", tk.END).strip()
+        if not raw:
+            messagebox.showwarning("Empty", "JSON text is empty.")
+            return
+        try:
+            parsed = json.loads(raw)
+        except Exception as e:
+            messagebox.showerror("JSON Error", f"Failed to parse JSON: {e}")
+            return
+        if not isinstance(parsed, dict):
+            messagebox.showerror("JSON Error", "Top-level JSON must be an object/dictionary.")
+            return
+        self.data = parsed
+        self.populate_form()
+        self.update_live_preview()
+        messagebox.showinfo("Applied", "JSON applied to form successfully.")
     def _on_ctrl_wheel_preview(self, event):
         # Ctrl + MouseWheel: zoom in/out
         if event.delta > 0:
