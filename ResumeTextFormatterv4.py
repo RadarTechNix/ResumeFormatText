@@ -179,7 +179,8 @@ class ResumeApp:
         self.editor_scrollbar.pack(side="right", fill="y")
 
         # --- JSON tab contents ---
-        self.json_text = tk.Text(self.json_tab, wrap=tk.NONE)
+        # smaller inline JSON viewer per user request
+        self.json_text = tk.Text(self.json_tab, wrap=tk.NONE, width=60, height=18)
         j_v = ttk.Scrollbar(self.json_tab, orient=tk.VERTICAL, command=self.json_text.yview)
         j_h = ttk.Scrollbar(self.json_tab, orient=tk.HORIZONTAL, command=self.json_text.xview)
         self.json_text.configure(yscrollcommand=j_v.set, xscrollcommand=j_h.set)
@@ -192,10 +193,16 @@ class ResumeApp:
         ttk.Button(json_btn_frame, text="Apply JSON to Form", command=self._apply_json_from_tab).pack(side=tk.LEFT, padx=6, pady=6)
         ttk.Button(json_btn_frame, text="Save JSON to file", command=lambda: self._save_text_to_file(self.json_text)).pack(side=tk.LEFT, padx=6, pady=6)
         ttk.Button(json_btn_frame, text="Back to Main", command=lambda: self.left_notebook.select(self.main_tab)).pack(side=tk.RIGHT, padx=6, pady=6)
+        # PDF-only window handle and image cache
+        self.pdf_only_win = None
+        self.pdf_only_images = []
+        # Add Open PDF Only button to top bar
+        ttk.Button(top_frame, text="Open PDF Only", command=self._open_pdf_only_window).pack(side=tk.RIGHT, padx=6)
 
         # --- RIGHT PANE (Live PDF Preview) ---
         right_container = ttk.Frame(paned)
-        paned.add(right_container, weight=1)
+        # give the preview pane more space (weight 3)
+        paned.add(right_container, weight=3)
 
         preview_header = ttk.Label(right_container, text="LIVE PDF PREVIEW", font=("Helvetica", 11, "bold"), padding=5)
         preview_header.pack(anchor="nw")
@@ -397,13 +404,58 @@ class ResumeApp:
         return pdf_bytes
 
     def update_live_preview(self):
-        # If JSON tab exists, populate it and select
         try:
-            self.json_text.delete("1.0", tk.END)
-            self.json_text.insert("1.0", json.dumps(self.extract_form_data(), indent=2, ensure_ascii=False))
-            self.left_notebook.select(self.json_tab)
+            # Update JSON tab content without switching tabs
+            if hasattr(self, 'json_text'):
+                try:
+                    self.json_text.delete("1.0", tk.END)
+                    self.json_text.insert("1.0", json.dumps(self.extract_form_data(), indent=2, ensure_ascii=False))
+                except Exception:
+                    pass
+
+            pdf_bytes = self.build_pdf_bytes()
+
+            # Render PDF pages to images and show in preview frame
+            pdf_doc = fitz.open(stream=pdf_bytes, filetype="pdf")
+            num_pages = len(pdf_doc)
+            self.page_label.config(text=f"Total Pages: {num_pages}")
+
+            # Clear previous preview
+            for w in self.preview_frame.winfo_children():
+                w.destroy()
+            self.preview_images = []
+
+            for idx in range(num_pages):
+                page = pdf_doc.load_page(idx)
+                base = 1.5
+                scale = base * self.preview_scale
+                pix = page.get_pixmap(matrix=fitz.Matrix(scale, scale))
+                img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+
+                # Resize for display while preserving aspect
+                max_w = int(850 * self.preview_scale)
+                max_h = int(1200 * self.preview_scale)
+                img.thumbnail((max_w, max_h), Image.Resampling.LANCZOS)
+                photo = ImageTk.PhotoImage(img)
+                self.preview_images.append(photo)
+
+                p_label = tk.Label(self.preview_frame, text=f"Page {idx + 1} of {num_pages}", font=("Helvetica", 9, "bold"), bg="#525659", fg="white")
+                p_label.pack(anchor="center", pady=(10, 2))
+
+                img_label = tk.Label(self.preview_frame, image=photo, bg="#525659")
+                img_label.pack(anchor="center", pady=(0, 10))
+
+            pdf_doc.close()
+
+            # Update PDF-only window if open
+            if self.pdf_only_win is not None:
+                try:
+                    self._update_pdf_only_window(pdf_bytes)
+                except Exception:
+                    pass
+
         except Exception as e:
-            messagebox.showerror("JSON Editor Error", str(e))
+            self.page_label.config(text=f"Total Pages: Error ({e})")
 
     def _show_json_tab(self):
         # Alias for button
@@ -426,6 +478,79 @@ class ResumeApp:
         self.populate_form()
         self.update_live_preview()
         messagebox.showinfo("Applied", "JSON applied to form successfully.")
+
+    def _open_pdf_only_window(self):
+        # Bring existing window to front if exists
+        if getattr(self, 'pdf_only_win', None):
+            try:
+                self.pdf_only_win.lift()
+                return
+            except Exception:
+                self.pdf_only_win = None
+
+        self.pdf_only_win = tk.Toplevel(self.root)
+        self.pdf_only_win.title("PDF Only View")
+        # larger default size for comfortable viewing
+        self.pdf_only_win.geometry("1300x900")
+
+        canvas = tk.Canvas(self.pdf_only_win, bg="#333333")
+        vbar = ttk.Scrollbar(self.pdf_only_win, orient=tk.VERTICAL, command=canvas.yview)
+        canvas.configure(yscrollcommand=vbar.set)
+        vbar.pack(side=tk.RIGHT, fill=tk.Y)
+        canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+        frame = tk.Frame(canvas, bg="#333333")
+        canvas.create_window((0, 0), window=frame, anchor="nw")
+
+        def _on_config(e):
+            canvas.configure(scrollregion=canvas.bbox("all"))
+
+        frame.bind("<Configure>", _on_config)
+
+        self.pdf_only_canvas = canvas
+        self.pdf_only_frame = frame
+        self.pdf_only_images = []
+
+        # Render current PDF into the new window
+        try:
+            pdf_bytes = self.build_pdf_bytes()
+            self._update_pdf_only_window(pdf_bytes)
+        except Exception:
+            pass
+
+        def on_close():
+            try:
+                self.pdf_only_win.destroy()
+            finally:
+                self.pdf_only_win = None
+
+        self.pdf_only_win.protocol("WM_DELETE_WINDOW", on_close)
+
+    def _update_pdf_only_window(self, pdf_bytes):
+        if getattr(self, 'pdf_only_win', None) is None:
+            return
+        try:
+            for w in self.pdf_only_frame.winfo_children():
+                w.destroy()
+            self.pdf_only_images = []
+
+            pdf_doc = fitz.open(stream=pdf_bytes, filetype="pdf")
+            for idx in range(len(pdf_doc)):
+                page = pdf_doc.load_page(idx)
+                pix = page.get_pixmap(matrix=fitz.Matrix(2.0 * self.preview_scale, 2.0 * self.preview_scale))
+                img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+                photo = ImageTk.PhotoImage(img)
+                self.pdf_only_images.append(photo)
+
+                p_label = tk.Label(self.pdf_only_frame, text=f"Page {idx+1}", font=("Helvetica", 10, "bold"), bg="#333333", fg="white")
+                p_label.pack(anchor="center", pady=(10, 2))
+                img_label = tk.Label(self.pdf_only_frame, image=photo, bg="#333333")
+                img_label.pack(anchor="center", pady=(0, 10))
+
+            pdf_doc.close()
+        except Exception:
+            pass
+
     def _on_ctrl_wheel_preview(self, event):
         # Ctrl + MouseWheel: zoom in/out
         if event.delta > 0:
@@ -608,7 +733,8 @@ class ResumeApp:
     def _open_json_editor(self):
         top = tk.Toplevel(self.root)
         top.title("JSON Editor")
-        top.geometry("900x700")
+        # reduced size per user request
+        top.geometry("700x500")
 
         # horizontal and vertical scrollbars
         vbar = ttk.Scrollbar(top, orient=tk.VERTICAL)
