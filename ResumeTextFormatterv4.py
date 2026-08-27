@@ -1,5 +1,6 @@
 import io
 import json
+import re
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 
@@ -112,11 +113,62 @@ class ResumeApp:
         self.root.geometry("1400x900")
 
         self.data = INITIAL_DATA
+        self.cover_letter_data = {
+            "header": {
+                "name": "Nikhil Ganpat Navghade",
+                "location": "Munich, Germany, 80809",
+                "phone": "+49 163 5454172",
+                "email": "nikhil.nawaghadej@gmail.com",
+                "linkedin": "linkedin.com/in/nikhil-navghade/",
+                "website": "radartechnix.github.io/Profile/",
+                "company": "InnoSenT GmbH",
+                "role": "Radar-System-Ingenieur (m/w/d)"
+            },
+            "recipient": "Dear Hiring Professional,",
+            "opening": "I am writing to express my interest in the Radar-System-Ingenieur position at InnoSenT GmbH. With 12 years of experience in radar engineering, I offer a T-shaped profile combining deep expertise in radar signal processing and system architecture with broad experience in automotive ADAS, radar SoCs, RF systems, system integration, validation, requirements, and customer engineering.",
+            "body": "My T-shaped profile can be summarized as:\n\n- Deep Expertise (Vertical): Automotive FMCW radar, ADAS radar, pulsed radar, MIMO/DOA, 1D–4D FFT processing, CFAR, beamforming, detection, sidelobe suppression, radar system architecture, and multi-core optimization. At Fusionride, I contributed to complete radar system development, delivered the first 4×4 corner radar prototype with real-time detections within one year, and contributed to 6×8 front-radar development. At Continental, I developed and validated radar functions with 99.92% functional coverage.\n- Broad Capabilities (Horizontal): Radar SoCs, RF characterization, hardware/software integration, MATLAB/Simulink, Python, Embedded C, requirements management using HP DOORS and HP ETM/ELM, system bring-up, laboratory validation, functional safety-related activities in an ASIL B environment, and ASPICE-compliant development processes. My customer-facing experience at Calterah also includes customer requirements analysis, technical support, system troubleshooting, product demonstrations, and collaboration with R&D, hardware, software, applications, and product teams.\n- Additional System Expertise: Hands-on experience with radar semiconductor cybersecurity and embedded integration, including secure boot, secure firmware/software, OTP/eFuse configuration, key and certificate provisioning, and Ethernet driver debugging. This allows me to understand radar products from semiconductor and system levels and effectively connect customer requirements with engineering implementation.",
+            "closing": "I am particularly motivated by InnoSenT's combination of automotive and industrial radar development, system design, customer requirements, and cross-functional engineering. I believe my combination of deep radar expertise and broad system-level experience would allow me to contribute effectively to the development and continuous improvement of InnoSenT's radar sensors.\n\nI would welcome the opportunity to discuss how my experience can support your radar system engineering and future product development activities. Thank you for your time and consideration.",
+            "signature": "Nikhil Ganpat Navghade"
+        }
+        self.full_cover_letter_raw = """**Nikhil Ganpat Navghade**
+
+Radar Systems Engineer
+
+Munich, Germany, 80809
+
+Tel: +49 163 5454172 | Email: [nikhil.nawaghadej@gmail.com](mailto:nikhil.nawaghadej@gmail.com)
+LinkedIn: linkedin.com/in/nikhil-navghade/ | Profile: radartechnix.github.io/Profile/
+
+**InnoSenT GmbH,**
+
+Erlangen / Donnersdorf, Germany
+
+**Application for Radar-System-Ingenieur (m/w/d)**
+
+Dear Hiring Professional,
+
+I am writing to express my interest in the Radar-System-Ingenieur position at InnoSenT GmbH. With **12 years of experience in radar engineering**, I offer a T-shaped profile combining deep expertise in radar signal processing and system architecture with broad experience in **automotive ADAS, radar SoCs, RF systems, system integration, validation, requirements, and customer engineering**.
+
+My **T-shaped profile** can be summarized as:
+
+- **Deep Expertise (Vertical):** Automotive FMCW radar, ADAS radar, pulsed radar, MIMO/DOA, 1D–4D FFT processing, CFAR, beamforming, detection, sidelobe suppression, radar system architecture, and multi-core optimization. At Fusionride, I contributed to complete radar system development, delivered the first **4×4 corner radar prototype with real-time detections within one year**, and contributed to 6×8 front-radar development. At Continental, I developed and validated radar functions with **99.92% functional coverage**.
+- **Broad Capabilities (Horizontal):** Radar SoCs, RF characterization, hardware/software integration, MATLAB/Simulink, Python, Embedded C, requirements management using **HP DOORS and HP ETM/ELM**, system bring-up, laboratory validation, functional safety-related activities in an **ASIL B environment**, and ASPICE-compliant development processes. My customer-facing experience at Calterah also includes customer requirements analysis, technical support, system troubleshooting, product demonstrations, and collaboration with R&D, hardware, software, applications, and product teams.
+- **Additional System Expertise:** Hands-on experience with radar semiconductor cybersecurity and embedded integration, including **secure boot, secure firmware/software, OTP/eFuse configuration, key and certificate provisioning, and Ethernet driver debugging**. This allows me to understand radar products from semiconductor and system levels and effectively connect customer requirements with engineering implementation.
+
+I am particularly motivated by InnoSenT's combination of **automotive and industrial radar development, system design, customer requirements, and cross-functional engineering**. I believe my combination of deep radar expertise and broad system-level experience would allow me to contribute effectively to the development and continuous improvement of InnoSenT's radar sensors.
+
+I would welcome the opportunity to discuss how my experience can support your radar system engineering and future product development activities. Thank you for your time and consideration.
+
+Sincerely,
+
+**Nikhil Ganpat Navghade**"""
         self.preview_images = []
         self.preview_scale = 1.0  # zoom multiplier for PDF preview
+        self.current_document = "resume"
 
         self.create_widgets()
         self.populate_form()
+        self.populate_cover_letter_form()
 
     def create_widgets(self):
         # Top Bar
@@ -158,13 +210,18 @@ class ResumeApp:
         self.left_tab_label.pack(side=tk.LEFT, padx=6, pady=4)
         ttk.Button(left_header, text="Show JSON", command=lambda: self._show_json_tab()).pack(side=tk.RIGHT, padx=6)
 
-        # Notebook containing main form and JSON diff/editor
+        # Notebook containing main form, cover letter and JSON diff/editor
         self.left_notebook = ttk.Notebook(left_container)
         self.main_tab = ttk.Frame(self.left_notebook)
+        self.cover_tab = ttk.Frame(self.left_notebook)
+        self.full_cover_tab = ttk.Frame(self.left_notebook)
         self.json_tab = ttk.Frame(self.left_notebook)
         self.left_notebook.add(self.main_tab, text="Main")
+        self.left_notebook.add(self.cover_tab, text="Cover Letter")
+        self.left_notebook.add(self.full_cover_tab, text="Full Letter")
         self.left_notebook.add(self.json_tab, text="JSON")
         self.left_notebook.pack(fill=tk.BOTH, expand=True)
+        self.left_notebook.bind("<<NotebookTabChanged>>", self._on_tab_change)
 
         # --- Main form canvas inside the notebook ---
         self.editor_canvas = tk.Canvas(self.main_tab)
@@ -177,6 +234,52 @@ class ResumeApp:
 
         self.editor_canvas.pack(side="left", fill="both", expand=True)
         self.editor_scrollbar.pack(side="right", fill="y")
+
+        # --- Cover Letter tab contents ---
+        cover_fields = ttk.Frame(self.cover_tab, padding=10)
+        cover_fields.pack(fill=tk.BOTH, expand=True)
+
+        ttk.Label(cover_fields, text="Company:").grid(row=0, column=0, sticky="w", padx=5, pady=4)
+        self.cover_company_entry = tk.Entry(cover_fields, width=80)
+        self.cover_company_entry.grid(row=0, column=1, sticky="ew", padx=5, pady=4)
+
+        ttk.Label(cover_fields, text="Role:").grid(row=1, column=0, sticky="w", padx=5, pady=4)
+        self.cover_role_entry = tk.Entry(cover_fields, width=80)
+        self.cover_role_entry.grid(row=1, column=1, sticky="ew", padx=5, pady=4)
+
+        ttk.Label(cover_fields, text="Dear / Recipient:").grid(row=2, column=0, sticky="nw", padx=5, pady=4)
+        self.cover_recipient_text = tk.Text(cover_fields, height=2, width=80)
+        self.cover_recipient_text.grid(row=2, column=1, sticky="ew", padx=5, pady=4)
+
+        ttk.Label(cover_fields, text="Body:").grid(row=3, column=0, sticky="nw", padx=5, pady=4)
+        self.cover_body_text = tk.Text(cover_fields, height=18, width=100, wrap=tk.WORD)
+        self.cover_body_text.grid(row=3, column=1, sticky="nsew", padx=5, pady=4)
+
+        ttk.Label(cover_fields, text="Closing paragraph:").grid(row=4, column=0, sticky="nw", padx=5, pady=4)
+        self.cover_closing_text = tk.Text(cover_fields, height=8, width=80, wrap=tk.WORD)
+        self.cover_closing_text.grid(row=4, column=1, sticky="ew", padx=5, pady=4)
+
+        ttk.Label(cover_fields, text="Signature name:").grid(row=5, column=0, sticky="w", padx=5, pady=4)
+        self.cover_signature_entry = tk.Entry(cover_fields, width=80)
+        self.cover_signature_entry.grid(row=5, column=1, sticky="ew", padx=5, pady=4)
+
+        cover_fields.columnconfigure(1, weight=1)
+        cover_fields.rowconfigure(3, weight=1)
+
+        ttk.Button(cover_fields, text="Apply Cover Letter", command=self._apply_cover_letter_from_form).grid(row=6, column=1, sticky="e", padx=5, pady=(4, 10))
+
+        # --- Full Cover Letter text tab ---
+        full_letter_frame = ttk.Frame(self.full_cover_tab, padding=10)
+        full_letter_frame.pack(fill=tk.BOTH, expand=True)
+
+        self.full_cover_text = tk.Text(full_letter_frame, wrap=tk.WORD, height=28)
+        self.full_cover_text.insert("1.0", self.full_cover_letter_raw)
+        self.full_cover_text.pack(fill=tk.BOTH, expand=True, padx=5, pady=(5, 10))
+
+        btn_row = ttk.Frame(full_letter_frame)
+        btn_row.pack(fill=tk.X, pady=(0, 8))
+        ttk.Button(btn_row, text="Apply Full Letter", command=self._apply_full_cover_letter_text).pack(side=tk.LEFT, padx=(0, 8))
+        ttk.Button(btn_row, text="Save as Markdown", command=self._save_full_letter_markdown).pack(side=tk.LEFT)
 
         # --- JSON tab contents ---
         # smaller inline JSON viewer per user request
@@ -330,6 +433,76 @@ class ResumeApp:
             "languages": [l.strip() for l in self.lang_entry.get().split("|") if l.strip()]
         }
 
+    def populate_cover_letter_form(self):
+        self.cover_company_entry.delete(0, tk.END)
+        self.cover_company_entry.insert(0, self.cover_letter_data.get("header", {}).get("company", ""))
+
+        self.cover_role_entry.delete(0, tk.END)
+        self.cover_role_entry.insert(0, self.cover_letter_data.get("header", {}).get("role", ""))
+
+        self.cover_recipient_text.delete("1.0", tk.END)
+        self.cover_recipient_text.insert("1.0", self.cover_letter_data.get("recipient", "Dear Hiring Professional,"))
+
+        self.cover_body_text.delete("1.0", tk.END)
+        self.cover_body_text.insert("1.0", self.cover_letter_data.get("body", ""))
+
+        self.cover_closing_text.delete("1.0", tk.END)
+        self.cover_closing_text.insert("1.0", self.cover_letter_data.get("closing", ""))
+
+        self.cover_signature_entry.delete(0, tk.END)
+        self.cover_signature_entry.insert(0, self.cover_letter_data.get("signature", "Nikhil Ganpat Navghade"))
+
+    def extract_cover_letter_data(self):
+        return {
+            "header": {
+                "company": self.cover_company_entry.get().strip(),
+                "role": self.cover_role_entry.get().strip(),
+                "name": self.data.get("header", {}).get("name", ""),
+                "location": self.data.get("header", {}).get("location", ""),
+                "phone": self.data.get("header", {}).get("phone", ""),
+                "email": self.data.get("header", {}).get("email", ""),
+                "linkedin": self.data.get("header", {}).get("linkedin", ""),
+                "website": self.data.get("header", {}).get("website", self.cover_letter_data.get("header", {}).get("website", ""))
+            },
+            "recipient": self.cover_recipient_text.get("1.0", tk.END).strip(),
+            "opening": self.cover_letter_data.get("opening", ""),
+            "body": self.cover_body_text.get("1.0", tk.END).strip(),
+            "closing": self.cover_closing_text.get("1.0", tk.END).strip(),
+            "signature": self.cover_signature_entry.get().strip() or self.cover_letter_data.get("signature", "")
+        }
+
+    def _apply_cover_letter_from_form(self):
+        self.cover_letter_data = self.extract_cover_letter_data()
+        self.update_live_preview()
+        messagebox.showinfo("Cover Letter", "Cover letter content updated.")
+
+    def _apply_full_cover_letter_text(self):
+        raw_text = self.full_cover_text.get("1.0", tk.END).strip()
+        if not raw_text:
+            messagebox.showwarning("Full Letter", "Please paste or type a full cover letter first.")
+            return
+        self.full_cover_letter_raw = raw_text
+        self.current_document = "cover_letter_raw"
+        self.update_live_preview()
+        messagebox.showinfo("Full Letter", "Full cover letter applied to preview and export.")
+
+    def _on_tab_change(self, event=None):
+        tab = self.left_notebook.select()
+        if tab == str(self.main_tab):
+            self.current_document = "resume"
+        elif tab == str(self.cover_tab):
+            self.current_document = "cover_letter"
+        elif tab == str(self.full_cover_tab):
+            self.current_document = "cover_letter_raw"
+        else:
+            self.current_document = "resume"
+        self.update_live_preview()
+
+    def _get_active_pdf_bytes(self):
+        if self.current_document in ("cover_letter", "cover_letter_raw"):
+            return self.build_cover_letter_pdf_bytes()
+        return self.build_pdf_bytes()
+
     def build_pdf_bytes(self):
         data = self.extract_form_data()
         buffer = io.BytesIO()
@@ -403,6 +576,218 @@ class ResumeApp:
         buffer.close()
         return pdf_bytes
 
+    def _render_cover_letter_markdown(self):
+        cover = self.extract_cover_letter_data()
+        hdr = cover.get("header", {})
+        name = hdr.get("name") or "Nikhil Ganpat Navghade"
+        loc = hdr.get("location") or ""
+        phone = hdr.get("phone") or ""
+        email = hdr.get("email") or ""
+        linkedin = hdr.get("linkedin") or ""
+        website = hdr.get("website") or ""
+        company = hdr.get("company") or ""
+        role = hdr.get("role") or ""
+
+        lines = []
+        lines.append(f"**{name}**")
+        lines.append("Radar Systems Engineer")
+        lines.append(loc)
+        lines.append(f"Tel: {phone} | Email: {email}")
+        lines.append(f"LinkedIn: {linkedin} | Profile: {website}")
+        lines.append("")
+        lines.append(f"**{company},**")
+        lines.append("Erlangen / Donnersdorf, Germany")
+        lines.append("")
+        lines.append(f"**Application for {role}**")
+        lines.append("")
+        lines.append(cover.get("recipient", "Dear Hiring Professional,"))
+        lines.append("")
+
+        for paragraph in (cover.get("body", "") or "").split("\n\n"):
+            if paragraph.strip():
+                lines.append(paragraph.strip())
+                lines.append("")
+
+        closing = (cover.get("closing", "") or "").strip()
+        if closing:
+            lines.append(closing)
+            lines.append("")
+
+        signature = (cover.get("signature", "") or "").strip()
+        if signature:
+            lines.append(f"**{signature}**")
+        return "\n".join(lines).strip() + "\n"
+
+    def _render_raw_cover_letter_to_pdf_story(self, text):
+        lines = text.splitlines()
+        styles = getSampleStyleSheet()
+        name_style = ParagraphStyle('Name', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=15, leading=17, alignment=TA_CENTER)
+        small_style = ParagraphStyle('Small', parent=styles['Normal'], fontName='Helvetica', fontSize=8.5, leading=11, alignment=TA_CENTER)
+        body_style = ParagraphStyle('Body', parent=styles['Normal'], fontName='Helvetica', fontSize=10.5, leading=14)
+        bold_body_style = ParagraphStyle('BoldBody', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=10.5, leading=14)
+        sign_style = ParagraphStyle('Sign', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=10.5, leading=14)
+
+        def format_markdown_line(line):
+            if not line.strip():
+                return ""
+            sanitized = re.sub(r'\[([^\]]+)\]\([^\)]+\)', r'\1', line)
+            sanitized = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', sanitized)
+            sanitized = sanitized.replace('&', '&amp;')
+            return sanitized
+
+        story = []
+        index = 0
+        header_done = False
+        in_header = True
+
+        while index < len(lines):
+            raw_line = lines[index].rstrip()
+            line = raw_line.strip()
+
+            if not line:
+                if in_header:
+                    story.append(Spacer(1, 4))
+                else:
+                    story.append(Spacer(1, 8))
+                index += 1
+                continue
+
+            if not header_done and line.startswith('**') and 'InnoSenT' not in line:
+                story.append(Paragraph(format_markdown_line(line), name_style))
+                index += 1
+                continue
+
+            if not header_done and in_header and line not in {'**InnoSenT GmbH,**', 'Dear Hiring Professional,'}:
+                if 'Tel:' in line or 'LinkedIn:' in line or 'Munich' in line or 'Erlangen' in line:
+                    story.append(Paragraph(format_markdown_line(line), small_style))
+                    index += 1
+                    continue
+                if line.startswith('Radar Systems Engineer'):
+                    story.append(Paragraph(format_markdown_line(line), small_style))
+                    index += 1
+                    continue
+
+            if line == '**InnoSenT GmbH,**':
+                in_header = False
+                header_done = True
+                story.append(Paragraph(format_markdown_line(line), bold_body_style))
+                index += 1
+                continue
+
+            if line.startswith('**Application for'):
+                story.append(Paragraph(format_markdown_line(line), bold_body_style))
+                index += 1
+                continue
+
+            if line.startswith('- '):
+                story.append(Paragraph(f"• {format_markdown_line(line[2:])}", body_style))
+                index += 1
+                continue
+
+            if line.startswith('Sincerely,'):
+                story.append(Paragraph('Sincerely,', body_style))
+                story.append(Spacer(1, 12))
+                index += 1
+                continue
+
+            if re.fullmatch(r'\*\*[^*]+\*\*', line):
+                story.append(Paragraph(format_markdown_line(line), sign_style))
+                index += 1
+                continue
+
+            if line.lower().startswith('dear '):
+                story.append(Paragraph(format_markdown_line(line), body_style))
+                index += 1
+                continue
+
+            story.append(Paragraph(format_markdown_line(line), body_style))
+            index += 1
+
+        return story
+
+    def build_cover_letter_pdf_bytes(self):
+        if self.current_document == "cover_letter_raw" and self.full_cover_letter_raw.strip():
+            buffer = io.BytesIO()
+            doc = SimpleDocTemplate(buffer, pagesize=letter, rightMargin=44, leftMargin=44, topMargin=36, bottomMargin=36)
+            story = self._render_raw_cover_letter_to_pdf_story(self.full_cover_letter_raw)
+            doc.build(story)
+            pdf_bytes = buffer.getvalue()
+            buffer.close()
+            return pdf_bytes
+
+        cover = self.extract_cover_letter_data()
+        hdr = cover.get("header", {})
+        buffer = io.BytesIO()
+        doc = SimpleDocTemplate(buffer, pagesize=letter, rightMargin=44, leftMargin=44, topMargin=36, bottomMargin=36)
+        story = []
+
+        styles = getSampleStyleSheet()
+        name_style = ParagraphStyle('Name', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=15, leading=17, alignment=TA_CENTER)
+        small_style = ParagraphStyle('Small', parent=styles['Normal'], fontName='Helvetica', fontSize=8.5, leading=11, alignment=TA_CENTER)
+        body_style = ParagraphStyle('Body', parent=styles['Normal'], fontName='Helvetica', fontSize=10.5, leading=14)
+        intro_style = ParagraphStyle('Intro', parent=styles['BodyText'], fontName='Helvetica', fontSize=10.5, leading=14)
+        sign_style = ParagraphStyle('Sign', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=10.5, leading=14)
+
+        story.append(Paragraph(hdr.get("name", ""), name_style))
+        story.append(Spacer(1, 4))
+        story.append(Paragraph(hdr.get("location", ""), small_style))
+        story.append(Paragraph(f"Tel: {hdr.get('phone', '')} | Email: {hdr.get('email', '')}", small_style))
+        story.append(Paragraph(f"LinkedIn: {hdr.get('linkedin', '')} | Profile: {hdr.get('website', '')}", small_style))
+        story.append(Spacer(1, 18))
+        story.append(Paragraph(f"{hdr.get('company', '')}", body_style))
+        story.append(Paragraph(f"Application for {hdr.get('role', '')}", body_style))
+        story.append(Spacer(1, 16))
+        story.append(Paragraph(cover.get("recipient", "Dear Hiring Professional,"), intro_style))
+        story.append(Spacer(1, 10))
+
+        body_text = cover.get("body", "")
+        for paragraph in body_text.split("\n\n"):
+            if not paragraph.strip():
+                continue
+            html_paragraph = paragraph.strip().replace("\n", "<br/>")
+            html_paragraph = html_paragraph.replace("**", "")
+            story.append(Paragraph(html_paragraph, body_style))
+            story.append(Spacer(1, 8))
+
+        closing = (cover.get("closing", "") or "").strip()
+        if closing:
+            closing_html = closing.replace("\n", "<br/>").replace("**", "")
+            story.append(Spacer(1, 8))
+            story.append(Paragraph(closing_html, body_style))
+            story.append(Spacer(1, 18))
+
+        signature = (cover.get("signature") or "").strip()
+        if signature:
+            story.append(Paragraph(signature, sign_style))
+
+        doc.build(story)
+        pdf_bytes = buffer.getvalue()
+        buffer.close()
+        return pdf_bytes
+
+    def _export_cover_letter_text(self, filepath):
+        if self.current_document == "cover_letter_raw":
+            text = self.full_cover_letter_raw
+        else:
+            text = self._render_cover_letter_markdown()
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.write(text)
+        return text
+
+    def _save_full_letter_markdown(self):
+        raw_text = self.full_cover_text.get("1.0", tk.END).strip()
+        if not raw_text:
+            messagebox.showwarning("Full Letter", "There is no full letter content to save.")
+            return
+        filepath = filedialog.asksaveasfilename(
+            defaultextension=".md",
+            filetypes=[("Markdown Files", "*.md"), ("Text Files", "*.txt"), ("All Files", "*.*")]
+        )
+        if filepath:
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write(raw_text)
+            messagebox.showinfo("Saved", f"Full letter saved as markdown/text: {filepath}")
+
     def update_live_preview(self):
         try:
             # Update JSON tab content without switching tabs
@@ -413,7 +798,7 @@ class ResumeApp:
                 except Exception:
                     pass
 
-            pdf_bytes = self.build_pdf_bytes()
+            pdf_bytes = self._get_active_pdf_bytes()
 
             # Render PDF pages to images and show in preview frame
             pdf_doc = fitz.open(stream=pdf_bytes, filetype="pdf")
@@ -816,20 +1201,32 @@ class ResumeApp:
                 return
             pdf_path = f"{folder}/{name}.pdf"
             json_path = f"{folder}/{name}.json"
-            pdf_bytes = self.build_pdf_bytes()
+            pdf_bytes = self._get_active_pdf_bytes()
             with open(pdf_path, "wb") as f:
                 f.write(pdf_bytes)
-            # also save JSON representation
-            with open(json_path, 'w', encoding='utf-8') as f:
-                json.dump(self.extract_form_data(), f, indent=2)
+            if self.current_document in ("cover_letter", "cover_letter_raw"):
+                text_path = f"{folder}/{name}.md" if self.current_document == "cover_letter_raw" else f"{folder}/{name}.txt"
+                self._export_cover_letter_text(text_path)
+                with open(json_path, 'w', encoding='utf-8') as f:
+                    json.dump(self.extract_cover_letter_data(), f, indent=2)
+            else:
+                with open(json_path, 'w', encoding='utf-8') as f:
+                    json.dump(self.extract_form_data(), f, indent=2)
             self.update_live_preview()
-            messagebox.showinfo("Success", f"Saved {name}.pdf and {name}.json to {folder}")
+            if self.current_document in ("cover_letter", "cover_letter_raw"):
+                ext = "md" if self.current_document == "cover_letter_raw" else "txt"
+                messagebox.showinfo("Success", f"Saved {name}.pdf, {name}.{ext} and {name}.json to {folder}")
+            else:
+                messagebox.showinfo("Success", f"Saved {name}.pdf and {name}.json to {folder}")
         else:
             filepath = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF Files", "*.pdf")])
             if filepath:
-                pdf_bytes = self.build_pdf_bytes()
+                pdf_bytes = self._get_active_pdf_bytes()
                 with open(filepath, "wb") as f:
                     f.write(pdf_bytes)
+                if self.current_document in ("cover_letter", "cover_letter_raw"):
+                    text_path = filepath.rsplit('.', 1)[0] + ('.md' if self.current_document == 'cover_letter_raw' else '.txt')
+                    self._export_cover_letter_text(text_path)
                 self.update_live_preview()
                 messagebox.showinfo("Success", "PDF exported successfully!")
 
