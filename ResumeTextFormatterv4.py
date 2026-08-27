@@ -762,11 +762,19 @@ English — Professional | German — A2 | Hindi — Professional | Marathi — 
         sign_style = ParagraphStyle('Sign', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=10.5, leading=14, textColor=colors.black)
 
         def htmlize_link_text(value):
-            value = re.sub(r'\[([^\]]+)\]\((mailto:[^\)]+|https?://[^\)]+)\)',
-                           lambda m: f"{m.group(1)}",
-                           value)
-            value = value.replace('linkedin.com/in/nikhil-navghade/', 'LinkedIn')
-            value = value.replace('radartechnix.github.io/Profile/', 'Website')
+            value = re.sub(
+                r'\[([^\]]+)\]\((mailto:[^\)]+|https?://[^\)]+)\)',
+                lambda m: f"<link href=\"{m.group(2)}\"><font color=\"#0B57D0\">{m.group(1)}</font></link>",
+                value,
+            )
+            value = value.replace(
+                'linkedin.com/in/nikhil-navghade/',
+                '<link href="https://linkedin.com/in/nikhil-navghade/"><font color="#0B57D0">LinkedIn</font></link>',
+            )
+            value = value.replace(
+                'radartechnix.github.io/Profile/',
+                '<link href="https://radartechnix.github.io/Profile/"><font color="#0B57D0">Website</font></link>',
+            )
             value = re.sub(r'\*\*(.+?)\*\*', r'\1', value)
             value = value.replace('&', '&amp;')
             return value
@@ -792,17 +800,26 @@ English — Professional | German — A2 | Hindi — Professional | Marathi — 
                 index += 1
                 continue
 
+            if line.startswith('# '):
+                heading_text = line[2:].strip()
+                if 'Nikhil' in heading_text:
+                    story.append(Paragraph(format_markdown_line(heading_text), name_style))
+                else:
+                    story.append(Paragraph(format_markdown_line(heading_text), small_style))
+                index += 1
+                continue
+
             if line.startswith('**') and line.endswith('**') and 'Nikhil' in line:
-                story.append(Paragraph(format_markdown_line(line), name_style))
+                story.append(Paragraph(format_markdown_line(line.replace('**', '')), name_style))
                 index += 1
                 continue
 
-            if line.startswith('Radar Systems Engineer'):
-                story.append(Paragraph(format_markdown_line(line), small_style))
+            if line.startswith('**') and line.endswith('**') and 'RADAR' in line.upper():
+                story.append(Paragraph(format_markdown_line(line.replace('**', '')), small_style))
                 index += 1
                 continue
 
-            if 'Tel:' in line or 'LinkedIn:' in line or 'Munich' in line or 'Erlangen' in line:
+            if 'Tel:' in line or 'LinkedIn' in line or 'Munich' in line or 'Erlangen' in line:
                 story.append(Paragraph(format_markdown_line(line), small_style))
                 index += 1
                 continue
@@ -852,9 +869,19 @@ English — Professional | German — A2 | Hindi — Professional | Marathi — 
         italic_style = ParagraphStyle('CVItalic', parent=styles['Normal'], fontName='Helvetica-Oblique', fontSize=8.5, leading=10, textColor=colors.black)
 
         def clean_line(line):
-            cleaned = re.sub(r'\[([^\]]+)\]\((mailto:[^\)]+|https?://[^\)]+)\)', r'\1', line)
-            cleaned = cleaned.replace('linkedin.com/in/nikhil-navghade/', 'LinkedIn')
-            cleaned = cleaned.replace('radartechnix.github.io/Profile/', 'Website')
+            cleaned = re.sub(
+                r'\[([^\]]+)\]\((mailto:[^\)]+|https?://[^\)]+)\)',
+                lambda m: f"<link href=\"{m.group(2)}\"><font color=\"#0B57D0\">{m.group(1)}</font></link>",
+                line,
+            )
+            cleaned = cleaned.replace(
+                'linkedin.com/in/nikhil-navghade/',
+                '<link href="https://linkedin.com/in/nikhil-navghade/"><font color="#0B57D0">LinkedIn</font></link>',
+            )
+            cleaned = cleaned.replace(
+                'radartechnix.github.io/Profile/',
+                '<link href="https://radartechnix.github.io/Profile/"><font color="#0B57D0">Website</font></link>',
+            )
             cleaned = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', cleaned)
             cleaned = cleaned.replace('&', '&amp;')
             return cleaned
