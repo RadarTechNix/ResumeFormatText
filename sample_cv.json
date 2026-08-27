@@ -1,0 +1,54 @@
+{
+  "header": {
+    "name": "Nikhil Ganpat Navghade",
+    "title": "RADAR SYSTEMS ENGINEER | AUTOMOTIVE ADAS | RADAR SoC | SYSTEM INTEGRATION & VALIDATION",
+    "location": "Munich, Germany",
+    "phone": "+49 163 5454172",
+    "email": "nikhil.nawaghadej@gmail.com",
+    "linkedin": "linkedin.com/in/nikhil-navghade/",
+    "website": "radartechnix.github.io/Profile/"
+  },
+  "summary": "Radar Systems Engineer with 12 years of experience spanning automotive ADAS, FMCW and pulsed radar, radar SoCs, signal processing, system architecture, integration, validation, and customer engineering.",
+  "competencies": [
+    "Radar Systems Engineering: Automotive radar | ADAS | FMCW | Pulsed-Doppler | System design | Integration | Validation",
+    "Requirements & Customer Engineering: Customer requirements analysis | HP DOORS | Customer support | Technical demonstrations",
+    "RF & Semiconductor Systems: Radar SoCs | RF TX/RX chains | ADC sampling | RF characterization | Hardware/software integration",
+    "Signal Processing: FFT | Digital filtering | MIMO | Beamforming | CFAR | Doppler | Detection | Angle estimation",
+    "Automotive Development & Safety: ASIL B validation | MISRA checks | ASPICE-compliant processes"
+  ],
+  "experience": [
+    {
+      "company": "NXP Semiconductors",
+      "role": "System Integration & Validation Engineer",
+      "meta": "Munich, Germany | 2026 – Present",
+      "bullets": [
+        "Perform system- and board-level integration and validation of 77 GHz radar semiconductor products.",
+        "Translate product requirements into validation strategies, automated test cases, and performance metrics.",
+        "Develop Python and Java automation frameworks for radar validation."
+      ]
+    },
+    {
+      "company": "Calterah GmbH",
+      "role": "FAE & Technical Sales",
+      "meta": "Munich, Germany | Sept 2024 – Feb 2026",
+      "bullets": [
+        "Acted as a technical advisor to customers throughout the radar SoC lifecycle.",
+        "Supported customer architecture decisions, integration, validation, and troubleshooting."
+      ]
+    }
+  ],
+  "education": [
+    "M.E. — Embedded Systems & VLSI | Pune University | 2016 | CGPA: 8.54/10",
+    "B.E. — Electronics & Telecommunication | Pune University | 2013 | CGPA: 8.43/10"
+  ],
+  "publications_and_achievements": [
+    "IEEE Conference Paper: Comparative study and implementation of wind-profiler radar, 2017.",
+    "Pioneered the first 4×4 corner radar product with real-time detections within one year at Fusionride."
+  ],
+  "languages": [
+    "English",
+    "German",
+    "Hindi",
+    "Marathi"
+  ]
+}

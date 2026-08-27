@@ -1,0 +1,17 @@
+{
+  "header": {
+    "company": "InnoSenT GmbH",
+    "role": "Radar-System-Ingenieur (m/w/d)",
+    "name": "Nikhil Ganpat Navghade",
+    "location": "Munich, Germany",
+    "phone": "+49 163 5454172",
+    "email": "nikhil.nawaghadej@gmail.com",
+    "linkedin": "linkedin.com/in/nikhil-navghade/",
+    "website": "radartechnix.github.io/Profile/"
+  },
+  "recipient": "Dear Hiring Professional,",
+  "opening": "I am writing to express my interest in the Radar-System-Ingenieur position at InnoSenT GmbH. With 12 years of experience in radar engineering, I offer a T-shaped profile combining deep expertise in radar signal processing and system architecture with broad experience in automotive ADAS, radar SoCs, RF systems, system integration, validation, requirements, and customer engineering.",
+  "body": "My T-shaped profile can be summarized as:\n\n- Deep Expertise (Vertical): Automotive FMCW radar, ADAS radar, pulsed radar, MIMO/DOA, 1D–4D FFT processing, CFAR, beamforming, detection, sidelobe suppression, radar system architecture, and multi-core optimization.\n- Broad Capabilities (Horizontal): Radar SoCs, RF characterization, hardware/software integration, MATLAB/Simulink, Python, Embedded C, requirements management using HP DOORS and HP ETM/ELM, system bring-up, laboratory validation, and ASPICE-compliant development processes.\n- Additional System Expertise: Hands-on experience with radar semiconductor cybersecurity, secure boot, secure firmware/software, OTP/eFuse, and Ethernet driver debugging.",
+  "closing": "I am particularly motivated by InnoSenT's combination of automotive and industrial radar development, system design, customer requirements, and cross-functional engineering. I would welcome the opportunity to discuss how my experience can support your radar engineering and future product development activities.\n\nThank you for your time and consideration.",
+  "signature": "Nikhil Ganpat Navghade"
+}

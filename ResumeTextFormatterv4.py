@@ -11,7 +11,7 @@ import pymupdf as fitz  # PyMuPDF (use recommended import to avoid deprecation w
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, HRFlowable
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.lib.enums import TA_CENTER
+from reportlab.lib.enums import TA_CENTER, TA_LEFT
 from reportlab.lib import colors
 
 INITIAL_DATA = {
@@ -130,14 +130,10 @@ class ResumeApp:
             "closing": "I am particularly motivated by InnoSenT's combination of automotive and industrial radar development, system design, customer requirements, and cross-functional engineering. I believe my combination of deep radar expertise and broad system-level experience would allow me to contribute effectively to the development and continuous improvement of InnoSenT's radar sensors.\n\nI would welcome the opportunity to discuss how my experience can support your radar system engineering and future product development activities. Thank you for your time and consideration.",
             "signature": "Nikhil Ganpat Navghade"
         }
-        self.full_cover_letter_raw = """**Nikhil Ganpat Navghade**
+        self.full_cover_letter_raw = """# **Nikhil Ganpat Navghade**
+**RADAR SYSTEMS ENGINEER | AUTOMOTIVE ADAS | RADAR SoC | SYSTEM INTEGRATION & VALIDATION**
 
-Radar Systems Engineer
-
-Munich, Germany, 80809
-
-Tel: +49 163 5454172 | Email: [nikhil.nawaghadej@gmail.com](mailto:nikhil.nawaghadej@gmail.com)
-LinkedIn: linkedin.com/in/nikhil-navghade/ | Profile: radartechnix.github.io/Profile/
+Munich, Germany | +49 163 5454172 | [nikhil.nawaghadej@gmail.com](mailto:nikhil.nawaghadej@gmail.com) | linkedin.com/in/nikhil-navghade/ | VisitMySite: radartechnix.github.io/Profile/
 
 **InnoSenT GmbH,**
 
@@ -147,15 +143,15 @@ Erlangen / Donnersdorf, Germany
 
 Dear Hiring Professional,
 
-I am writing to express my interest in the Radar-System-Ingenieur position at InnoSenT GmbH. With **12 years of experience in radar engineering**, I offer a T-shaped profile combining deep expertise in radar signal processing and system architecture with broad experience in **automotive ADAS, radar SoCs, RF systems, system integration, validation, requirements, and customer engineering**.
+I am writing to express my interest in the Radar-System-Ingenieur position at InnoSenT GmbH. With **12 years of experience in radar engineering**, I offer a T-shaped profile combining deep expertise in radar signal processing and system architecture with broad experience in automotive ADAS, radar SoCs, RF systems, system integration, validation, requirements, and customer engineering.
 
-My **T-shaped profile** can be summarized as:
+My T-shaped profile can be summarized as:
 
-- **Deep Expertise (Vertical):** Automotive FMCW radar, ADAS radar, pulsed radar, MIMO/DOA, 1D–4D FFT processing, CFAR, beamforming, detection, sidelobe suppression, radar system architecture, and multi-core optimization. At Fusionride, I contributed to complete radar system development, delivered the first **4×4 corner radar prototype with real-time detections within one year**, and contributed to 6×8 front-radar development. At Continental, I developed and validated radar functions with **99.92% functional coverage**.
-- **Broad Capabilities (Horizontal):** Radar SoCs, RF characterization, hardware/software integration, MATLAB/Simulink, Python, Embedded C, requirements management using **HP DOORS and HP ETM/ELM**, system bring-up, laboratory validation, functional safety-related activities in an **ASIL B environment**, and ASPICE-compliant development processes. My customer-facing experience at Calterah also includes customer requirements analysis, technical support, system troubleshooting, product demonstrations, and collaboration with R&D, hardware, software, applications, and product teams.
-- **Additional System Expertise:** Hands-on experience with radar semiconductor cybersecurity and embedded integration, including **secure boot, secure firmware/software, OTP/eFuse configuration, key and certificate provisioning, and Ethernet driver debugging**. This allows me to understand radar products from semiconductor and system levels and effectively connect customer requirements with engineering implementation.
+- Deep Expertise (Vertical): Automotive FMCW radar, ADAS radar, pulsed radar, MIMO/DOA, 1D–4D FFT processing, CFAR, beamforming, detection, sidelobe suppression, radar system architecture, and multi-core optimization. At Fusionride, I contributed to complete radar system development, delivered the first 4×4 corner radar prototype with real-time detections within one year, and contributed to 6×8 front-radar development. At Continental, I developed and validated radar functions with 99.92% functional coverage.
+- Broad Capabilities (Horizontal): Radar SoCs, RF characterization, hardware/software integration, MATLAB/Simulink, Python, Embedded C, requirements management using HP DOORS and HP ETM/ELM, system bring-up, laboratory validation, functional safety-related activities in an ASIL B environment, and ASPICE-compliant development processes. My customer-facing experience at Calterah also includes customer requirements analysis, technical support, system troubleshooting, product demonstrations, and collaboration with R&D, hardware, software, applications, and product teams.
+- Additional System Expertise: Hands-on experience with radar semiconductor cybersecurity and embedded integration, including secure boot, secure firmware/software, OTP/eFuse configuration, key and certificate provisioning, and Ethernet driver debugging. This allows me to understand radar products from semiconductor and system levels and effectively connect customer requirements with engineering implementation.
 
-I am particularly motivated by InnoSenT's combination of **automotive and industrial radar development, system design, customer requirements, and cross-functional engineering**. I believe my combination of deep radar expertise and broad system-level experience would allow me to contribute effectively to the development and continuous improvement of InnoSenT's radar sensors.
+I am particularly motivated by InnoSenT's combination of automotive and industrial radar development, system design, customer requirements, and cross-functional engineering. I believe my combination of deep radar expertise and broad system-level experience would allow me to contribute effectively to the development and continuous improvement of InnoSenT's radar sensors.
 
 I would welcome the opportunity to discuss how my experience can support your radar system engineering and future product development activities. Thank you for your time and consideration.
 
@@ -165,21 +161,21 @@ Sincerely,
         self.full_cv_raw = """# **Nikhil Ganpat Navghade**
 **RADAR SYSTEMS ENGINEER | AUTOMOTIVE ADAS | RADAR SoC | SYSTEM INTEGRATION & VALIDATION**
 
-Munich, Germany | +49 163 5454172 | [nikhil.nawaghadej@gmail.com](mailto:nikhil.nawaghadej@gmail.com) | linkedin.com/in/nikhil-navghade/
+Munich, Germany | +49 163 5454172 | [nikhil.nawaghadej@gmail.com](mailto:nikhil.nawaghadej@gmail.com) | linkedin.com/in/nikhil-navghade/ | VisitMySite: radartechnix.github.io/Profile/
 
 ## **PROFESSIONAL SUMMARY**
 Radar Systems Engineer with **12 years of experience** spanning automotive ADAS, FMCW and pulsed radar, radar SoCs, signal processing, system architecture, integration, validation, and customer engineering. Experienced in translating customer and system requirements into technical solutions, designing radar architectures, performing hardware/software integration and laboratory validation, and troubleshooting RF, mixed-signal, embedded, DSP, and system-level issues. Strong background in automotive radar at Continental, radar system architecture at Fusionride, radar SoC customer engineering at Calterah, and semiconductor system integration and validation at NXP. Experienced with MATLAB/Simulink, Python, Embedded C, HP DOORS, HP ETM/ELM, ASIL B-related validation, MISRA checks, and ASPICE-compliant development. Additional hands-on cybersecurity experience with secure boot, secure firmware, OTP/eFuse, key/certificate provisioning, and Ethernet debugging.
 
 ## **CORE COMPETENCIES**
 
-- **Radar Systems Engineering:** Automotive radar | ADAS | FMCW | Pulsed-Doppler | Radar sensor architecture | 1D–4D processing | System design | System integration | Performance optimization
-- **Requirements & Customer Engineering:** Customer requirements analysis | Requirements traceability | HP DOORS | HP ETM/ELM | Product evaluation | System bring-up | Customer support | Technical demonstrations
-- **RF & Semiconductor Systems:** Radar SoCs | RF TX/RX chains | ADC sampling | RF characterization | RF measurements | Mixed-signal debugging | Hardware/software integration
-- **Signal Processing:** FFT | Digital filtering | MIMO | Beamforming | CFAR | Doppler | Detection | Angle estimation | Sidelobe suppression | Noise estimation | Virtual-array analysis
-- **Automotive Development & Safety:** ADAS development | ISO 26262 exposure | ASIL B-related validation | Functional testing | Test coverage | MISRA checks | ASPICE-compliant development | Automotive quality processes
-- **Cybersecurity & Embedded:** Secure boot | Secure firmware/software | OTP/eFuse | Key/certificate provisioning | Ethernet driver debugging | Embedded C
-- **Software & Tools:** MATLAB/Simulink | Python | Embedded C | Java | C++ (basic) | Git | Test automation | Laboratory automation
-- **Cross-Functional Engineering:** RF | Hardware | Software | Mechanical interfaces | R&D | Product | Applications | Marketing | Customer engineering
+- Radar Systems Engineering: Automotive radar | ADAS | FMCW | Pulsed-Doppler | Radar sensor architecture | 1D–4D processing | System design | System integration | Performance optimization
+- Requirements & Customer Engineering: Customer requirements analysis | Requirements traceability | HP DOORS | HP ETM/ELM | Product evaluation | System bring-up | Customer support | Technical demonstrations
+- RF & Semiconductor Systems: Radar SoCs | RF TX/RX chains | ADC sampling | RF characterization | RF measurements | Mixed-signal debugging | Hardware/software integration
+- Signal Processing: FFT | Digital filtering | MIMO | Beamforming | CFAR | Doppler | Detection | Angle estimation | Sidelobe suppression | Noise estimation | Virtual-array analysis
+- Automotive Development & Safety: ADAS development | ISO 26262 exposure | ASIL B-related validation | Functional testing | Test coverage | MISRA checks | ASPICE-compliant development | Automotive quality processes
+- Cybersecurity & Embedded: Secure boot | Secure firmware/software | OTP/eFuse | Key/certificate provisioning | Ethernet driver debugging | Embedded C
+- Software & Tools: MATLAB/Simulink | Python | Embedded C | Java | C++ (basic) | Git | Test automation | Laboratory automation
+- Cross-Functional Engineering: RF | Hardware | Software | Mechanical interfaces | R&D | Product | Applications | Marketing | Customer engineering
 
 ## **PROFESSIONAL EXPERIENCE**
 
@@ -236,17 +232,17 @@ Radar Systems Engineer with **12 years of experience** spanning automotive ADAS,
 
 ## **EDUCATION**
 
-- **M.E. — Embedded Systems & VLSI** | Pune University | 2016 | CGPA: 8.54/10
-- **B.E. — Electronics & Telecommunication** | Pune University | 2013 | CGPA: 8.43/10
+- M.E. — Embedded Systems & VLSI | Pune University | 2016 | CGPA: 8.54/10
+- B.E. — Electronics & Telecommunication | Pune University | 2013 | CGPA: 8.43/10
 
 ## **PUBLICATIONS & ACHIEVEMENTS**
 
-- IEEE Conference Paper: *Comparative study and implementation of wind-profiler radar*, 2017.
+- IEEE Conference Paper: Comparative study and implementation of wind-profiler radar, 2017.
 - Pioneered the first 4×4 corner radar product with real-time detections within one year at Fusionride.
 - Received a monetary award for developing an engineering tool that significantly accelerated radar signal-processing bring-up and analysis.
 
 ## **LANGUAGES**
-**English — Professional | German — A2 | Hindi — Professional | Marathi — Native**"""
+English — Professional | German — A2 | Hindi — Professional | Marathi — Native"""
         self.preview_images = []
         self.preview_scale = 1.0  # zoom multiplier for PDF preview
         self.current_document = "resume"
@@ -297,18 +293,19 @@ Radar Systems Engineer with **12 years of experience** spanning automotive ADAS,
 
         # Notebook containing main form, cover letter and JSON diff/editor
         self.left_notebook = ttk.Notebook(left_container)
+        self.full_cv_tab = ttk.Frame(self.left_notebook)
+        self.full_cover_tab = ttk.Frame(self.left_notebook)
         self.main_tab = ttk.Frame(self.left_notebook)
         self.cover_tab = ttk.Frame(self.left_notebook)
-        self.full_cover_tab = ttk.Frame(self.left_notebook)
-        self.full_cv_tab = ttk.Frame(self.left_notebook)
         self.json_tab = ttk.Frame(self.left_notebook)
+        self.left_notebook.add(self.full_cv_tab, text="Full CV")
+        self.left_notebook.add(self.full_cover_tab, text="Full Letter")
         self.left_notebook.add(self.main_tab, text="Main")
         self.left_notebook.add(self.cover_tab, text="Cover Letter")
-        self.left_notebook.add(self.full_cover_tab, text="Full Letter")
-        self.left_notebook.add(self.full_cv_tab, text="Full CV")
         self.left_notebook.add(self.json_tab, text="JSON")
         self.left_notebook.pack(fill=tk.BOTH, expand=True)
         self.left_notebook.bind("<<NotebookTabChanged>>", self._on_tab_change)
+        self.left_notebook.select(self.full_cv_tab)
 
         # --- Main form canvas inside the notebook ---
         self.editor_canvas = tk.Canvas(self.main_tab)
@@ -321,6 +318,10 @@ Radar Systems Engineer with **12 years of experience** spanning automotive ADAS,
 
         self.editor_canvas.pack(side="left", fill="both", expand=True)
         self.editor_scrollbar.pack(side="right", fill="y")
+
+        main_btn_row = ttk.Frame(self.main_tab)
+        main_btn_row.pack(fill=tk.X, padx=10, pady=(8, 0))
+        ttk.Button(main_btn_row, text="Export PDF", command=lambda: self._export_tab_pdf("resume")).pack(side=tk.LEFT)
 
         # --- Cover Letter tab contents ---
         cover_fields = ttk.Frame(self.cover_tab, padding=10)
@@ -353,8 +354,6 @@ Radar Systems Engineer with **12 years of experience** spanning automotive ADAS,
         cover_fields.columnconfigure(1, weight=1)
         cover_fields.rowconfigure(3, weight=1)
 
-        ttk.Button(cover_fields, text="Apply Cover Letter", command=self._apply_cover_letter_from_form).grid(row=6, column=1, sticky="e", padx=5, pady=(4, 10))
-
         # --- Full Cover Letter text tab ---
         full_letter_frame = ttk.Frame(self.full_cover_tab, padding=10)
         full_letter_frame.pack(fill=tk.BOTH, expand=True)
@@ -367,7 +366,8 @@ Radar Systems Engineer with **12 years of experience** spanning automotive ADAS,
         btn_row.pack(fill=tk.X, pady=(0, 8))
         ttk.Button(btn_row, text="Apply Full Letter", command=self._apply_full_cover_letter_text).pack(side=tk.LEFT, padx=(0, 8))
         ttk.Button(btn_row, text="Load Markdown", command=lambda: self._load_markdown_file(self.full_cover_text)).pack(side=tk.LEFT, padx=(0, 8))
-        ttk.Button(btn_row, text="Save as Markdown", command=self._save_full_letter_markdown).pack(side=tk.LEFT)
+        ttk.Button(btn_row, text="Save as Markdown", command=self._save_full_letter_markdown).pack(side=tk.LEFT, padx=(0, 8))
+        ttk.Button(btn_row, text="Export PDF", command=lambda: self._export_tab_pdf("cover_letter_raw")).pack(side=tk.LEFT)
 
         # --- Full CV text tab ---
         full_cv_frame = ttk.Frame(self.full_cv_tab, padding=10)
@@ -381,7 +381,13 @@ Radar Systems Engineer with **12 years of experience** spanning automotive ADAS,
         cv_btn_row.pack(fill=tk.X, pady=(0, 8))
         ttk.Button(cv_btn_row, text="Apply Full CV", command=self._apply_full_cv_text).pack(side=tk.LEFT, padx=(0, 8))
         ttk.Button(cv_btn_row, text="Load Markdown", command=lambda: self._load_markdown_file(self.full_cv_text)).pack(side=tk.LEFT, padx=(0, 8))
-        ttk.Button(cv_btn_row, text="Save as Markdown", command=self._save_full_cv_markdown).pack(side=tk.LEFT)
+        ttk.Button(cv_btn_row, text="Save as Markdown", command=self._save_full_cv_markdown).pack(side=tk.LEFT, padx=(0, 8))
+        ttk.Button(cv_btn_row, text="Export PDF", command=lambda: self._export_tab_pdf("cv_raw")).pack(side=tk.LEFT)
+
+        cover_btn_row = ttk.Frame(cover_fields)
+        cover_btn_row.grid(row=7, column=1, sticky="e", padx=5, pady=(4, 10))
+        ttk.Button(cover_btn_row, text="Apply Cover Letter", command=self._apply_cover_letter_from_form).pack(side=tk.LEFT, padx=(0, 8))
+        ttk.Button(cover_btn_row, text="Export PDF", command=lambda: self._export_tab_pdf("cover_letter")).pack(side=tk.LEFT)
 
         # --- JSON tab contents ---
         # smaller inline JSON viewer per user request
@@ -435,8 +441,8 @@ Radar Systems Engineer with **12 years of experience** spanning automotive ADAS,
         # Global undo/redo bindings (Text and Entry widgets)
         self.root.bind_all("<Control-z>", self._global_undo)
         self.root.bind_all("<Control-y>", self._global_redo)
-        # Ctrl+S to save JSON quickly
-        self.root.bind_all("<Control-s>", self._global_save_json)
+        # Ctrl+S to save the active document and its associated files
+        self.root.bind_all("<Control-s>", self._global_save_current)
 
     def populate_form(self):
         for w in self.scrollable_frame.winfo_children():
@@ -451,6 +457,7 @@ Radar Systems Engineer with **12 years of experience** spanning automotive ADAS,
             f.pack(fill=tk.X, pady=2)
             ttk.Label(f, text=f"{key.capitalize()}:", width=12).pack(side=tk.LEFT)
             ent = tk.Entry(f, width=60)
+            self._enable_undo_support(ent)
             ent.insert(0, hdr.get(key, ""))
             ent.pack(side=tk.LEFT, fill=tk.X, expand=True)
             self.hdr_entries[key] = ent
@@ -481,13 +488,13 @@ Radar Systems Engineer with **12 years of experience** spanning automotive ADAS,
 
             r1 = ttk.Frame(jf); r1.pack(fill=tk.X, pady=2)
             ttk.Label(r1, text="Company:").pack(side=tk.LEFT)
-            c_e = tk.Entry(r1, width=20); c_e.insert(0, job.get("company", "")); c_e.pack(side=tk.LEFT, padx=(5,10))
+            c_e = tk.Entry(r1, width=20); self._enable_undo_support(c_e); c_e.insert(0, job.get("company", "")); c_e.pack(side=tk.LEFT, padx=(5,10))
             ttk.Label(r1, text="Role:").pack(side=tk.LEFT)
-            r_e = tk.Entry(r1, width=25); r_e.insert(0, job.get("role", "")); r_e.pack(side=tk.LEFT, padx=5)
+            r_e = tk.Entry(r1, width=25); self._enable_undo_support(r_e); r_e.insert(0, job.get("role", "")); r_e.pack(side=tk.LEFT, padx=5)
 
             r2 = ttk.Frame(jf); r2.pack(fill=tk.X, pady=2)
             ttk.Label(r2, text="Meta/Location:").pack(side=tk.LEFT)
-            m_e = tk.Entry(r2, width=50); m_e.insert(0, job.get("meta", "")); m_e.pack(side=tk.LEFT, padx=5)
+            m_e = tk.Entry(r2, width=50); self._enable_undo_support(m_e); m_e.insert(0, job.get("meta", "")); m_e.pack(side=tk.LEFT, padx=5)
 
             ttk.Label(jf, text="Bullets (One per line):").pack(anchor="w", pady=(4, 2))
             b_t = tk.Text(jf, width=65, height=5, undo=True)
@@ -600,22 +607,28 @@ Radar Systems Engineer with **12 years of experience** spanning automotive ADAS,
 
     def _on_tab_change(self, event=None):
         tab = self.left_notebook.select()
-        if tab == str(self.main_tab):
+        if tab == str(self.full_cv_tab):
+            self.current_document = "cv_raw"
+        elif tab == str(self.full_cover_tab):
+            self.current_document = "cover_letter_raw"
+        elif tab == str(self.main_tab):
             self.current_document = "resume"
         elif tab == str(self.cover_tab):
             self.current_document = "cover_letter"
-        elif tab == str(self.full_cover_tab):
-            self.current_document = "cover_letter_raw"
-        elif tab == str(self.full_cv_tab):
-            self.current_document = "cv_raw"
         else:
             self.current_document = "resume"
         self.update_live_preview()
 
-    def _get_active_pdf_bytes(self):
-        if self.current_document in ("cover_letter", "cover_letter_raw"):
+    def _export_tab_pdf(self, document_name):
+        self.current_document = document_name
+        self.update_live_preview()
+        self.generate_pdf()
+
+    def _get_active_pdf_bytes(self, document_name=None):
+        doc_name = document_name or self.current_document
+        if doc_name in ("cover_letter", "cover_letter_raw"):
             return self.build_cover_letter_pdf_bytes()
-        if self.current_document == "cv_raw":
+        if doc_name == "cv_raw":
             return self.build_full_cv_pdf_bytes()
         return self.build_pdf_bytes()
 
@@ -626,18 +639,18 @@ Radar Systems Engineer with **12 years of experience** spanning automotive ADAS,
         story = []
 
         styles = getSampleStyleSheet()
-        name_style = ParagraphStyle('Name', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=15, leading=17, alignment=TA_CENTER)
-        subhead_style = ParagraphStyle('SubHead', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=9, leading=12, alignment=TA_CENTER, textColor=colors.HexColor('#1A2B4C'))
-        contact_style = ParagraphStyle('Contact', parent=styles['Normal'], fontName='Helvetica', fontSize=8.5, leading=11, alignment=TA_CENTER)
-        sec_heading = ParagraphStyle('SecHeading', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=10, leading=12, textColor=colors.HexColor('#1A2B4C'), spaceBefore=6, spaceAfter=2)
-        job_title_style = ParagraphStyle('JobTitle', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=9, leading=11)
-        job_sub_style = ParagraphStyle('JobSub', parent=styles['Normal'], fontName='Helvetica-Oblique', fontSize=8, leading=10, textColor=colors.HexColor('#444444'))
-        body_style = ParagraphStyle('Body', parent=styles['Normal'], fontName='Helvetica', fontSize=8.5, leading=11)
-        bullet_style = ParagraphStyle('Bullet', parent=styles['Normal'], fontName='Helvetica', fontSize=8.5, leading=11, leftIndent=10)
+        name_style = ParagraphStyle('Name', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=16, leading=18, alignment=TA_CENTER, textColor=colors.black)
+        subhead_style = ParagraphStyle('SubHead', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=9, leading=11, alignment=TA_CENTER, textColor=colors.black)
+        contact_style = ParagraphStyle('Contact', parent=styles['Normal'], fontName='Helvetica', fontSize=8.5, leading=10.5, alignment=TA_CENTER, textColor=colors.black)
+        sec_heading = ParagraphStyle('SecHeading', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=10, leading=12, textColor=colors.black, spaceBefore=4, spaceAfter=2)
+        job_title_style = ParagraphStyle('JobTitle', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=9, leading=11, textColor=colors.black)
+        job_sub_style = ParagraphStyle('JobSub', parent=styles['Normal'], fontName='Helvetica-Oblique', fontSize=8, leading=10, textColor=colors.black)
+        body_style = ParagraphStyle('Body', parent=styles['Normal'], fontName='Helvetica', fontSize=8.5, leading=11, textColor=colors.black)
+        bullet_style = ParagraphStyle('Bullet', parent=styles['Normal'], fontName='Helvetica', fontSize=8.5, leading=11, leftIndent=10, textColor=colors.black)
 
         def add_heading(title):
             story.append(Paragraph(title.upper(), sec_heading))
-            story.append(HRFlowable(width="100%", thickness=0.7, color=colors.HexColor('#1A2B4C'), spaceBefore=1, spaceAfter=3))
+            story.append(HRFlowable(width="100%", thickness=0.7, color=colors.black, spaceBefore=0, spaceAfter=2))
 
         # Header
         hdr = data.get("header", {})
@@ -645,7 +658,12 @@ Radar Systems Engineer with **12 years of experience** spanning automotive ADAS,
         story.append(Spacer(1, 2))
         story.append(Paragraph(hdr.get("title", ""), subhead_style))
         story.append(Spacer(1, 2))
-        c_info = f"{hdr.get('location', '')} | {hdr.get('phone', '')} | {hdr.get('email', '')} | {hdr.get('linkedin', '')}"
+        email_link = f"<link href=\"mailto:{hdr.get('email', '')}\"><font color=\"#0B57D0\">{hdr.get('email', '')}</font></link>"
+        linkedin_link = f"<link href=\"https://{hdr.get('linkedin', '').replace('https://', '').replace('http://', '')}\"><font color=\"#0B57D0\">LinkedIn</font></link>"
+        website_link = f"<link href=\"https://{hdr.get('website', '').replace('https://', '').replace('http://', '')}\"><font color=\"#0B57D0\">Website</font></link>" if hdr.get('website') else ""
+        c_info = f"{hdr.get('location', '')} | {hdr.get('phone', '')} | Email: {email_link} | {linkedin_link}"
+        if website_link:
+            c_info = c_info + f" | {website_link}"
         story.append(Paragraph(c_info, contact_style))
         story.append(Spacer(1, 4))
 
@@ -737,19 +755,26 @@ Radar Systems Engineer with **12 years of experience** spanning automotive ADAS,
     def _render_raw_cover_letter_to_pdf_story(self, text):
         lines = text.splitlines()
         styles = getSampleStyleSheet()
-        name_style = ParagraphStyle('Name', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=15, leading=17, alignment=TA_CENTER)
-        small_style = ParagraphStyle('Small', parent=styles['Normal'], fontName='Helvetica', fontSize=8.5, leading=11, alignment=TA_CENTER)
-        body_style = ParagraphStyle('Body', parent=styles['Normal'], fontName='Helvetica', fontSize=10.5, leading=14)
-        bold_body_style = ParagraphStyle('BoldBody', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=10.5, leading=14)
-        sign_style = ParagraphStyle('Sign', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=10.5, leading=14)
+        name_style = ParagraphStyle('Name', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=15, leading=17, alignment=TA_LEFT)
+        small_style = ParagraphStyle('Small', parent=styles['Normal'], fontName='Helvetica', fontSize=8.5, leading=11, alignment=TA_LEFT, textColor=colors.black)
+        body_style = ParagraphStyle('Body', parent=styles['Normal'], fontName='Helvetica', fontSize=10.5, leading=14, textColor=colors.black)
+        bold_body_style = ParagraphStyle('BoldBody', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=10.5, leading=14, textColor=colors.black)
+        sign_style = ParagraphStyle('Sign', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=10.5, leading=14, textColor=colors.black)
+
+        def htmlize_link_text(value):
+            value = re.sub(r'\[([^\]]+)\]\((mailto:[^\)]+|https?://[^\)]+)\)',
+                           lambda m: f"{m.group(1)}",
+                           value)
+            value = value.replace('linkedin.com/in/nikhil-navghade/', 'LinkedIn')
+            value = value.replace('radartechnix.github.io/Profile/', 'Website')
+            value = re.sub(r'\*\*(.+?)\*\*', r'\1', value)
+            value = value.replace('&', '&amp;')
+            return value
 
         def format_markdown_line(line):
             if not line.strip():
                 return ""
-            sanitized = re.sub(r'\[([^\]]+)\]\([^\)]+\)', r'\1', line)
-            sanitized = re.sub(r'\*\*(.+?)\*\*', r'\1', sanitized)
-            sanitized = sanitized.replace('&', '&amp;')
-            return sanitized
+            return htmlize_link_text(line)
 
         story = []
         index = 0
@@ -816,18 +841,20 @@ Radar Systems Engineer with **12 years of experience** spanning automotive ADAS,
 
     def _render_raw_cv_to_pdf_story(self, text):
         styles = getSampleStyleSheet()
-        title_style = ParagraphStyle('CVTitle', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=17, leading=20, alignment=TA_CENTER)
-        subtitle_style = ParagraphStyle('CVSubtitle', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=9, leading=12, alignment=TA_CENTER, textColor=colors.HexColor('#1A2B4C'))
-        meta_style = ParagraphStyle('CVMeta', parent=styles['Normal'], fontName='Helvetica', fontSize=8.5, leading=11, alignment=TA_CENTER)
-        heading_style = ParagraphStyle('CVHeading', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=11, leading=13, textColor=colors.HexColor('#1A2B4C'), spaceBefore=10, spaceAfter=4)
-        section_style = ParagraphStyle('CVSection', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=10, leading=12, textColor=colors.HexColor('#1A2B4C'))
-        body_style = ParagraphStyle('CVBody', parent=styles['Normal'], fontName='Helvetica', fontSize=9, leading=11)
-        body_bold_style = ParagraphStyle('CVBodyBold', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=9, leading=11)
-        bullet_style = ParagraphStyle('CVBullet', parent=styles['Normal'], fontName='Helvetica', fontSize=9, leading=11, leftIndent=12)
-        italic_style = ParagraphStyle('CVItalic', parent=styles['Normal'], fontName='Helvetica-Oblique', fontSize=8.5, leading=10)
+        title_style = ParagraphStyle('CVTitle', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=17, leading=20, alignment=TA_CENTER, textColor=colors.black)
+        subtitle_style = ParagraphStyle('CVSubtitle', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=9, leading=12, alignment=TA_CENTER, textColor=colors.black)
+        meta_style = ParagraphStyle('CVMeta', parent=styles['Normal'], fontName='Helvetica', fontSize=8.5, leading=11, alignment=TA_LEFT, textColor=colors.black)
+        heading_style = ParagraphStyle('CVHeading', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=11, leading=13, textColor=colors.black, spaceBefore=8, spaceAfter=2)
+        section_style = ParagraphStyle('CVSection', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=10, leading=12, textColor=colors.black)
+        body_style = ParagraphStyle('CVBody', parent=styles['Normal'], fontName='Helvetica', fontSize=9, leading=11, textColor=colors.black)
+        body_bold_style = ParagraphStyle('CVBodyBold', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=9, leading=11, textColor=colors.black)
+        bullet_style = ParagraphStyle('CVBullet', parent=styles['Normal'], fontName='Helvetica', fontSize=9, leading=11, leftIndent=12, textColor=colors.black)
+        italic_style = ParagraphStyle('CVItalic', parent=styles['Normal'], fontName='Helvetica-Oblique', fontSize=8.5, leading=10, textColor=colors.black)
 
         def clean_line(line):
-            cleaned = re.sub(r'\[([^\]]+)\]\([^\)]+\)', r'\1', line)
+            cleaned = re.sub(r'\[([^\]]+)\]\((mailto:[^\)]+|https?://[^\)]+)\)', r'\1', line)
+            cleaned = cleaned.replace('linkedin.com/in/nikhil-navghade/', 'LinkedIn')
+            cleaned = cleaned.replace('radartechnix.github.io/Profile/', 'Website')
             cleaned = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', cleaned)
             cleaned = cleaned.replace('&', '&amp;')
             return cleaned
@@ -901,18 +928,23 @@ Radar Systems Engineer with **12 years of experience** spanning automotive ADAS,
         story = []
 
         styles = getSampleStyleSheet()
-        name_style = ParagraphStyle('Name', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=15, leading=17, alignment=TA_CENTER)
-        small_style = ParagraphStyle('Small', parent=styles['Normal'], fontName='Helvetica', fontSize=8.5, leading=11, alignment=TA_CENTER)
-        body_style = ParagraphStyle('Body', parent=styles['Normal'], fontName='Helvetica', fontSize=10.5, leading=14)
-        intro_style = ParagraphStyle('Intro', parent=styles['BodyText'], fontName='Helvetica', fontSize=10.5, leading=14)
-        sign_style = ParagraphStyle('Sign', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=10.5, leading=14)
+        name_style = ParagraphStyle('Name', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=15, leading=17, alignment=TA_LEFT, textColor=colors.black)
+        small_style = ParagraphStyle('Small', parent=styles['Normal'], fontName='Helvetica', fontSize=8.5, leading=11, alignment=TA_LEFT, textColor=colors.black)
+        body_style = ParagraphStyle('Body', parent=styles['Normal'], fontName='Helvetica', fontSize=10.5, leading=14, alignment=TA_LEFT, textColor=colors.black)
+        intro_style = ParagraphStyle('Intro', parent=styles['BodyText'], fontName='Helvetica', fontSize=10.5, leading=14, alignment=TA_LEFT, textColor=colors.black)
+        sign_style = ParagraphStyle('Sign', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=10.5, leading=14, alignment=TA_LEFT, textColor=colors.black)
 
         story.append(Paragraph(hdr.get("name", ""), name_style))
-        story.append(Spacer(1, 4))
+        story.append(Spacer(1, 3))
         story.append(Paragraph(hdr.get("location", ""), small_style))
-        story.append(Paragraph(f"Tel: {hdr.get('phone', '')} | Email: {hdr.get('email', '')}", small_style))
-        story.append(Paragraph(f"LinkedIn: {hdr.get('linkedin', '')} | Profile: {hdr.get('website', '')}", small_style))
-        story.append(Spacer(1, 18))
+        email_link = f"<link href=\"mailto:{hdr.get('email', '')}\"><font color=\"#0B57D0\">{hdr.get('email', '')}</font></link>"
+        linkedin_link = f"<link href=\"https://{hdr.get('linkedin', '').replace('https://', '').replace('http://', '')}\"><font color=\"#0B57D0\">LinkedIn</font></link>"
+        website_link = f"<link href=\"https://{hdr.get('website', '').replace('https://', '').replace('http://', '')}\"><font color=\"#0B57D0\">Website</font></link>" if hdr.get('website') else ""
+        contact_line = f"Tel: {hdr.get('phone', '')} | Email: {email_link} | {linkedin_link}"
+        if website_link:
+            contact_line += f" | {website_link}"
+        story.append(Paragraph(contact_line, small_style))
+        story.append(Spacer(1, 12))
         story.append(Paragraph(f"{hdr.get('company', '')}", body_style))
         story.append(Paragraph(f"Application for {hdr.get('role', '')}", body_style))
         story.append(Spacer(1, 16))
@@ -1104,9 +1136,9 @@ Radar Systems Engineer with **12 years of experience** spanning automotive ADAS,
         self.pdf_only_frame = frame
         self.pdf_only_images = []
 
-        # Render current PDF into the new window
+        # Render the currently selected tab's PDF into the new window
         try:
-            pdf_bytes = self.build_pdf_bytes()
+            pdf_bytes = self._get_active_pdf_bytes()
             self._update_pdf_only_window(pdf_bytes)
         except Exception:
             pass
@@ -1156,10 +1188,24 @@ Radar Systems Engineer with **12 years of experience** spanning automotive ADAS,
         move = int(-1 * (event.delta / 120))
         self.editor_canvas.yview_scroll(move, "units")
 
+    def _enable_undo_support(self, widget):
+        try:
+            if hasattr(widget, "configure"):
+                try:
+                    widget.configure(undo=True)
+                except Exception:
+                    pass
+        except Exception:
+            pass
+        return widget
+
     def _global_undo(self, event):
         w = event.widget
         try:
             if isinstance(w, tk.Text):
+                w.edit_undo()
+                return "break"
+            if hasattr(w, "edit_undo"):
                 w.edit_undo()
                 return "break"
         except Exception:
@@ -1169,6 +1215,9 @@ Radar Systems Engineer with **12 years of experience** spanning automotive ADAS,
         w = event.widget
         try:
             if isinstance(w, tk.Text):
+                w.edit_redo()
+                return "break"
+            if hasattr(w, "edit_redo"):
                 w.edit_redo()
                 return "break"
         except Exception:
@@ -1315,13 +1364,16 @@ Radar Systems Engineer with **12 years of experience** spanning automotive ADAS,
 
         ttk.Button(top, text="Save & Close", command=save_job).pack(pady=6)
 
-    def _global_save_json(self, event=None):
-        # quick save JSON via Ctrl+S; reuse save_json logic
+    def _global_save_current(self, event=None):
+        # standard Ctrl+S behavior: save the active PDF and associated files
         try:
-            self.save_json()
+            self.generate_pdf()
         except Exception as e:
             messagebox.showerror("Save Error", str(e))
         return "break"
+
+    def _global_save_json(self, event=None):
+        return self._global_save_current(event)
 
     def _open_json_editor(self):
         top = tk.Toplevel(self.root)
@@ -1403,61 +1455,52 @@ Radar Systems Engineer with **12 years of experience** spanning automotive ADAS,
 
     def generate_pdf(self):
         name = self.filename_entry.get().strip() if hasattr(self, 'filename_entry') else ""
+
         if name:
             folder = filedialog.askdirectory(title="Choose folder to save PDF and JSON")
             if not folder:
                 return
-            pdf_path = f"{folder}/{name}.pdf"
-            json_path = f"{folder}/{name}.json"
-            pdf_bytes = self._get_active_pdf_bytes()
-            with open(pdf_path, "wb") as f:
-                f.write(pdf_bytes)
-            if self.current_document == "cover_letter":
-                txt_path = f"{folder}/{name}.txt"
-                self._export_cover_letter_text(txt_path)
-                with open(json_path, 'w', encoding='utf-8') as f:
-                    json.dump(self.extract_cover_letter_data(), f, indent=2)
-            elif self.current_document == "cover_letter_raw":
-                txt_path = f"{folder}/{name}.md"
-                self._export_cover_letter_text(txt_path)
-                with open(json_path, 'w', encoding='utf-8') as f:
-                    json.dump(self.extract_cover_letter_data(), f, indent=2)
-            elif self.current_document == "cv_raw":
-                txt_path = f"{folder}/{name}.md"
-                with open(txt_path, 'w', encoding='utf-8') as f:
-                    f.write(self.full_cv_raw)
-                with open(json_path, 'w', encoding='utf-8') as f:
-                    json.dump(self.extract_form_data(), f, indent=2)
-            else:
-                with open(json_path, 'w', encoding='utf-8') as f:
-                    json.dump(self.extract_form_data(), f, indent=2)
-            self.update_live_preview()
-            if self.current_document == "cover_letter":
-                messagebox.showinfo("Success", f"Saved {name}.pdf, {name}.txt and {name}.json to {folder}")
-            elif self.current_document == "cover_letter_raw":
-                messagebox.showinfo("Success", f"Saved {name}.pdf, {name}.md and {name}.json to {folder}")
-            elif self.current_document == "cv_raw":
-                messagebox.showinfo("Success", f"Saved {name}.pdf, {name}.md and {name}.json to {folder}")
-            else:
-                messagebox.showinfo("Success", f"Saved {name}.pdf and {name}.json to {folder}")
+            base_path = f"{folder}/{name}"
         else:
             filepath = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF Files", "*.pdf")])
-            if filepath:
-                pdf_bytes = self._get_active_pdf_bytes()
-                with open(filepath, "wb") as f:
-                    f.write(pdf_bytes)
-                if self.current_document == "cover_letter":
-                    txt_path = filepath.rsplit('.', 1)[0] + '.txt'
-                    self._export_cover_letter_text(txt_path)
-                elif self.current_document == "cover_letter_raw":
-                    txt_path = filepath.rsplit('.', 1)[0] + '.md'
-                    self._export_cover_letter_text(txt_path)
-                elif self.current_document == "cv_raw":
-                    txt_path = filepath.rsplit('.', 1)[0] + '.md'
-                    with open(txt_path, 'w', encoding='utf-8') as f:
-                        f.write(self.full_cv_raw)
-                self.update_live_preview()
-                messagebox.showinfo("Success", "PDF exported successfully!")
+            if not filepath:
+                return
+            base_path = filepath.rsplit('.', 1)[0]
+
+        pdf_path = f"{base_path}.pdf"
+        pdf_bytes = self._get_active_pdf_bytes()
+        with open(pdf_path, "wb") as f:
+            f.write(pdf_bytes)
+
+        if self.current_document == "cover_letter":
+            txt_path = f"{base_path}.txt"
+            self._export_cover_letter_text(txt_path)
+            with open(f"{base_path}.json", 'w', encoding='utf-8') as f:
+                json.dump(self.extract_cover_letter_data(), f, indent=2)
+        elif self.current_document == "cover_letter_raw":
+            txt_path = f"{base_path}.md"
+            self._export_cover_letter_text(txt_path)
+            with open(f"{base_path}.json", 'w', encoding='utf-8') as f:
+                json.dump(self.extract_cover_letter_data(), f, indent=2)
+        elif self.current_document == "cv_raw":
+            txt_path = f"{base_path}.md"
+            with open(txt_path, 'w', encoding='utf-8') as f:
+                f.write(self.full_cv_raw)
+            with open(f"{base_path}.json", 'w', encoding='utf-8') as f:
+                json.dump(self.extract_form_data(), f, indent=2)
+        else:
+            with open(f"{base_path}.json", 'w', encoding='utf-8') as f:
+                json.dump(self.extract_form_data(), f, indent=2)
+
+        self.update_live_preview()
+        if self.current_document == "cover_letter":
+            messagebox.showinfo("Success", f"Saved {base_path}.pdf, {base_path}.txt and {base_path}.json")
+        elif self.current_document == "cover_letter_raw":
+            messagebox.showinfo("Success", f"Saved {base_path}.pdf, {base_path}.md and {base_path}.json")
+        elif self.current_document == "cv_raw":
+            messagebox.showinfo("Success", f"Saved {base_path}.pdf, {base_path}.md and {base_path}.json")
+        else:
+            messagebox.showinfo("Success", f"Saved {base_path}.pdf and {base_path}.json")
 
 if __name__ == "__main__":
     root = tk.Tk()
