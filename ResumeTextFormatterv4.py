@@ -162,6 +162,91 @@ I would welcome the opportunity to discuss how my experience can support your ra
 Sincerely,
 
 **Nikhil Ganpat Navghade**"""
+        self.full_cv_raw = """# **Nikhil Ganpat Navghade**
+**RADAR SYSTEMS ENGINEER | AUTOMOTIVE ADAS | RADAR SoC | SYSTEM INTEGRATION & VALIDATION**
+
+Munich, Germany | +49 163 5454172 | [nikhil.nawaghadej@gmail.com](mailto:nikhil.nawaghadej@gmail.com) | linkedin.com/in/nikhil-navghade/
+
+## **PROFESSIONAL SUMMARY**
+Radar Systems Engineer with **12 years of experience** spanning automotive ADAS, FMCW and pulsed radar, radar SoCs, signal processing, system architecture, integration, validation, and customer engineering. Experienced in translating customer and system requirements into technical solutions, designing radar architectures, performing hardware/software integration and laboratory validation, and troubleshooting RF, mixed-signal, embedded, DSP, and system-level issues. Strong background in automotive radar at Continental, radar system architecture at Fusionride, radar SoC customer engineering at Calterah, and semiconductor system integration and validation at NXP. Experienced with MATLAB/Simulink, Python, Embedded C, HP DOORS, HP ETM/ELM, ASIL B-related validation, MISRA checks, and ASPICE-compliant development. Additional hands-on cybersecurity experience with secure boot, secure firmware, OTP/eFuse, key/certificate provisioning, and Ethernet debugging.
+
+## **CORE COMPETENCIES**
+
+- **Radar Systems Engineering:** Automotive radar | ADAS | FMCW | Pulsed-Doppler | Radar sensor architecture | 1D–4D processing | System design | System integration | Performance optimization
+- **Requirements & Customer Engineering:** Customer requirements analysis | Requirements traceability | HP DOORS | HP ETM/ELM | Product evaluation | System bring-up | Customer support | Technical demonstrations
+- **RF & Semiconductor Systems:** Radar SoCs | RF TX/RX chains | ADC sampling | RF characterization | RF measurements | Mixed-signal debugging | Hardware/software integration
+- **Signal Processing:** FFT | Digital filtering | MIMO | Beamforming | CFAR | Doppler | Detection | Angle estimation | Sidelobe suppression | Noise estimation | Virtual-array analysis
+- **Automotive Development & Safety:** ADAS development | ISO 26262 exposure | ASIL B-related validation | Functional testing | Test coverage | MISRA checks | ASPICE-compliant development | Automotive quality processes
+- **Cybersecurity & Embedded:** Secure boot | Secure firmware/software | OTP/eFuse | Key/certificate provisioning | Ethernet driver debugging | Embedded C
+- **Software & Tools:** MATLAB/Simulink | Python | Embedded C | Java | C++ (basic) | Git | Test automation | Laboratory automation
+- **Cross-Functional Engineering:** RF | Hardware | Software | Mechanical interfaces | R&D | Product | Applications | Marketing | Customer engineering
+
+## **PROFESSIONAL EXPERIENCE**
+
+### **NXP Semiconductors — System Integration & Validation Engineer**
+*via ACONEXT / Hays | Munich, Germany | 2026 – Present*
+
+- Perform system- and board-level integration and validation of 77 GHz radar semiconductor products, from laboratory characterization through system qualification.
+- Translate product requirements into validation strategies, automated test cases, measurement procedures, and performance metrics.
+- Develop Python and Java automation for 100+ validation scenarios, improving test repeatability and efficiency.
+- Integrate signal generators, attenuators, frequency multipliers, power meters, and other laboratory equipment into automated validation environments.
+- Perform RF and system characterization using laboratory measurements and MATLAB-based analysis.
+- Diagnose RF and system-level anomalies by correlating device behavior, requirements, measurements, and software analysis.
+- Perform hardware/software integration, system debugging, root-cause analysis, and technical communication with cross-functional teams.
+
+### **Calterah GmbH — FAE & Technical Sales**
+*Munich, Germany | Sept 2024 – Feb 2026*
+
+- Acted as a technical advisor to customers throughout the radar SoC lifecycle, from architecture and product selection through integration, validation, troubleshooting, and deployment.
+- Analyzed customer requirements and translated system needs into radar SoC architectures, configurations, interfaces, and technical solutions.
+- Supported customer architecture decisions involving RF front-end behavior, ADC sampling, DSP processing, interfaces, and end-to-end radar performance.
+- Supported customer system bring-up, hardware/software integration, validation, debugging, and performance optimization.
+- Diagnosed complex RF, mixed-signal, hardware/software, embedded, and DSP issues and coordinated root-cause investigations between customers and R&D.
+- Performed cybersecurity integration and debugging including secure boot, secure firmware/software, OTP/eFuse configuration, key/certificate provisioning, and related customer issues.
+- Debugged Ethernet driver and interface issues during customer system integration.
+- Delivered technical workshops, product demonstrations, and customer presentations, including Electronica 2024.
+- Collaborated with applications, R&D, product, marketing, and customers to convert field requirements into product improvements.
+
+### **Fusionride GmbH — Senior Radar Signal Processing Engineer**
+*Munich, Germany / India | Feb 2022 – Sept 2024*
+
+- Designed complete automotive radar processing chains from raw sensor data through detection, covering FFT, MIMO, beamforming, and advanced signal processing using MATLAB/Simulink.
+- Contributed to multi-core radar system architecture, focusing on memory mapping, computational efficiency, runtime performance, and system integration.
+- Worked across radar system design, algorithm development, integration, validation, and performance optimization.
+- Developed antenna evaluation tools covering beam patterns, sidelobes, and virtual-array characteristics, reducing analysis time from approximately one week to one day.
+- Delivered the first 4×4 corner radar prototype with real-time detections within one year and contributed to a 6×8 front-radar platform.
+- Collaborated across hardware, software, RF, antenna, and algorithm domains to resolve system-level radar performance issues.
+
+### **Continental Automotive — Technical Specialist, Radar**
+*Bengaluru, India | Jul 2018 – Feb 2022*
+
+- Developed and validated signal-processing functionality for automotive FMCW and ADAS radar systems in a production-oriented automotive environment.
+- Developed and validated CFAR, elevation MIMO, sidelobe suppression, noise estimation, and related radar algorithms.
+- Achieved 99.92% functional coverage for Gen5 radar validation through systematic functional testing and validation.
+- Performed functional safety-related validation in an ASIL B context, including functional testing, coverage analysis, and verification activities.
+- Worked with requirements and traceability processes and participated in an ASPICE-compliant automotive software development environment.
+- Performed MISRA-related compliance checks and supported embedded software quality activities.
+- Developed MATLAB and Embedded C modules and performed system-level radar performance analysis and debugging.
+
+### **Wavelet Technologies — Project Engineer**
+*Pune, India | Jul 2015 – Jul 2018*
+
+- Developed embedded firmware and signal-processing functionality for pulse wind-profile radar receiver systems.
+- Participated in algorithm implementation, laboratory testing, debugging, system integration, and performance analysis.
+
+## **EDUCATION**
+
+- **M.E. — Embedded Systems & VLSI** | Pune University | 2016 | CGPA: 8.54/10
+- **B.E. — Electronics & Telecommunication** | Pune University | 2013 | CGPA: 8.43/10
+
+## **PUBLICATIONS & ACHIEVEMENTS**
+
+- IEEE Conference Paper: *Comparative study and implementation of wind-profiler radar*, 2017.
+- Pioneered the first 4×4 corner radar product with real-time detections within one year at Fusionride.
+- Received a monetary award for developing an engineering tool that significantly accelerated radar signal-processing bring-up and analysis.
+
+## **LANGUAGES**
+**English — Professional | German — A2 | Hindi — Professional | Marathi — Native**"""
         self.preview_images = []
         self.preview_scale = 1.0  # zoom multiplier for PDF preview
         self.current_document = "resume"
@@ -215,10 +300,12 @@ Sincerely,
         self.main_tab = ttk.Frame(self.left_notebook)
         self.cover_tab = ttk.Frame(self.left_notebook)
         self.full_cover_tab = ttk.Frame(self.left_notebook)
+        self.full_cv_tab = ttk.Frame(self.left_notebook)
         self.json_tab = ttk.Frame(self.left_notebook)
         self.left_notebook.add(self.main_tab, text="Main")
         self.left_notebook.add(self.cover_tab, text="Cover Letter")
         self.left_notebook.add(self.full_cover_tab, text="Full Letter")
+        self.left_notebook.add(self.full_cv_tab, text="Full CV")
         self.left_notebook.add(self.json_tab, text="JSON")
         self.left_notebook.pack(fill=tk.BOTH, expand=True)
         self.left_notebook.bind("<<NotebookTabChanged>>", self._on_tab_change)
@@ -279,7 +366,22 @@ Sincerely,
         btn_row = ttk.Frame(full_letter_frame)
         btn_row.pack(fill=tk.X, pady=(0, 8))
         ttk.Button(btn_row, text="Apply Full Letter", command=self._apply_full_cover_letter_text).pack(side=tk.LEFT, padx=(0, 8))
+        ttk.Button(btn_row, text="Load Markdown", command=lambda: self._load_markdown_file(self.full_cover_text)).pack(side=tk.LEFT, padx=(0, 8))
         ttk.Button(btn_row, text="Save as Markdown", command=self._save_full_letter_markdown).pack(side=tk.LEFT)
+
+        # --- Full CV text tab ---
+        full_cv_frame = ttk.Frame(self.full_cv_tab, padding=10)
+        full_cv_frame.pack(fill=tk.BOTH, expand=True)
+
+        self.full_cv_text = tk.Text(full_cv_frame, wrap=tk.WORD, height=34)
+        self.full_cv_text.insert("1.0", self.full_cv_raw)
+        self.full_cv_text.pack(fill=tk.BOTH, expand=True, padx=5, pady=(5, 10))
+
+        cv_btn_row = ttk.Frame(full_cv_frame)
+        cv_btn_row.pack(fill=tk.X, pady=(0, 8))
+        ttk.Button(cv_btn_row, text="Apply Full CV", command=self._apply_full_cv_text).pack(side=tk.LEFT, padx=(0, 8))
+        ttk.Button(cv_btn_row, text="Load Markdown", command=lambda: self._load_markdown_file(self.full_cv_text)).pack(side=tk.LEFT, padx=(0, 8))
+        ttk.Button(cv_btn_row, text="Save as Markdown", command=self._save_full_cv_markdown).pack(side=tk.LEFT)
 
         # --- JSON tab contents ---
         # smaller inline JSON viewer per user request
@@ -486,6 +588,16 @@ Sincerely,
         self.update_live_preview()
         messagebox.showinfo("Full Letter", "Full cover letter applied to preview and export.")
 
+    def _apply_full_cv_text(self):
+        raw_text = self.full_cv_text.get("1.0", tk.END).strip()
+        if not raw_text:
+            messagebox.showwarning("Full CV", "Please paste or type a full CV first.")
+            return
+        self.full_cv_raw = raw_text
+        self.current_document = "cv_raw"
+        self.update_live_preview()
+        messagebox.showinfo("Full CV", "Full CV applied to preview and export.")
+
     def _on_tab_change(self, event=None):
         tab = self.left_notebook.select()
         if tab == str(self.main_tab):
@@ -494,6 +606,8 @@ Sincerely,
             self.current_document = "cover_letter"
         elif tab == str(self.full_cover_tab):
             self.current_document = "cover_letter_raw"
+        elif tab == str(self.full_cv_tab):
+            self.current_document = "cv_raw"
         else:
             self.current_document = "resume"
         self.update_live_preview()
@@ -501,6 +615,8 @@ Sincerely,
     def _get_active_pdf_bytes(self):
         if self.current_document in ("cover_letter", "cover_letter_raw"):
             return self.build_cover_letter_pdf_bytes()
+        if self.current_document == "cv_raw":
+            return self.build_full_cv_pdf_bytes()
         return self.build_pdf_bytes()
 
     def build_pdf_bytes(self):
@@ -631,13 +747,12 @@ Sincerely,
             if not line.strip():
                 return ""
             sanitized = re.sub(r'\[([^\]]+)\]\([^\)]+\)', r'\1', line)
-            sanitized = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', sanitized)
+            sanitized = re.sub(r'\*\*(.+?)\*\*', r'\1', sanitized)
             sanitized = sanitized.replace('&', '&amp;')
             return sanitized
 
         story = []
         index = 0
-        header_done = False
         in_header = True
 
         while index < len(lines):
@@ -648,39 +763,38 @@ Sincerely,
                 if in_header:
                     story.append(Spacer(1, 4))
                 else:
-                    story.append(Spacer(1, 8))
+                    story.append(Spacer(1, 6))
                 index += 1
                 continue
 
-            if not header_done and line.startswith('**') and 'InnoSenT' not in line:
+            if line.startswith('**') and line.endswith('**') and 'Nikhil' in line:
                 story.append(Paragraph(format_markdown_line(line), name_style))
                 index += 1
                 continue
 
-            if not header_done and in_header and line not in {'**InnoSenT GmbH,**', 'Dear Hiring Professional,'}:
-                if 'Tel:' in line or 'LinkedIn:' in line or 'Munich' in line or 'Erlangen' in line:
-                    story.append(Paragraph(format_markdown_line(line), small_style))
-                    index += 1
-                    continue
-                if line.startswith('Radar Systems Engineer'):
-                    story.append(Paragraph(format_markdown_line(line), small_style))
-                    index += 1
-                    continue
-
-            if line == '**InnoSenT GmbH,**':
-                in_header = False
-                header_done = True
-                story.append(Paragraph(format_markdown_line(line), bold_body_style))
+            if line.startswith('Radar Systems Engineer'):
+                story.append(Paragraph(format_markdown_line(line), small_style))
                 index += 1
                 continue
 
-            if line.startswith('**Application for'):
-                story.append(Paragraph(format_markdown_line(line), bold_body_style))
+            if 'Tel:' in line or 'LinkedIn:' in line or 'Munich' in line or 'Erlangen' in line:
+                story.append(Paragraph(format_markdown_line(line), small_style))
+                index += 1
+                continue
+
+            if line in {'InnoSenT GmbH,', 'Application for Radar-System-Ingenieur (m/w/d)', 'Dear Hiring Professional,'}:
+                story.append(Paragraph(format_markdown_line(line), bold_body_style if 'Application' in line else body_style))
+                in_header = False
                 index += 1
                 continue
 
             if line.startswith('- '):
                 story.append(Paragraph(f"• {format_markdown_line(line[2:])}", body_style))
+                index += 1
+                continue
+
+            if '12 years of experience' in line:
+                story.append(Paragraph(format_markdown_line(line), body_style))
                 index += 1
                 continue
 
@@ -690,13 +804,8 @@ Sincerely,
                 index += 1
                 continue
 
-            if re.fullmatch(r'\*\*[^*]+\*\*', line):
+            if line.startswith('**') and line.endswith('**'):
                 story.append(Paragraph(format_markdown_line(line), sign_style))
-                index += 1
-                continue
-
-            if line.lower().startswith('dear '):
-                story.append(Paragraph(format_markdown_line(line), body_style))
                 index += 1
                 continue
 
@@ -704,6 +813,76 @@ Sincerely,
             index += 1
 
         return story
+
+    def _render_raw_cv_to_pdf_story(self, text):
+        styles = getSampleStyleSheet()
+        title_style = ParagraphStyle('CVTitle', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=17, leading=20, alignment=TA_CENTER)
+        subtitle_style = ParagraphStyle('CVSubtitle', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=9, leading=12, alignment=TA_CENTER, textColor=colors.HexColor('#1A2B4C'))
+        meta_style = ParagraphStyle('CVMeta', parent=styles['Normal'], fontName='Helvetica', fontSize=8.5, leading=11, alignment=TA_CENTER)
+        heading_style = ParagraphStyle('CVHeading', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=11, leading=13, textColor=colors.HexColor('#1A2B4C'), spaceBefore=10, spaceAfter=4)
+        section_style = ParagraphStyle('CVSection', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=10, leading=12, textColor=colors.HexColor('#1A2B4C'))
+        body_style = ParagraphStyle('CVBody', parent=styles['Normal'], fontName='Helvetica', fontSize=9, leading=11)
+        body_bold_style = ParagraphStyle('CVBodyBold', parent=styles['Normal'], fontName='Helvetica-Bold', fontSize=9, leading=11)
+        bullet_style = ParagraphStyle('CVBullet', parent=styles['Normal'], fontName='Helvetica', fontSize=9, leading=11, leftIndent=12)
+        italic_style = ParagraphStyle('CVItalic', parent=styles['Normal'], fontName='Helvetica-Oblique', fontSize=8.5, leading=10)
+
+        def clean_line(line):
+            cleaned = re.sub(r'\[([^\]]+)\]\([^\)]+\)', r'\1', line)
+            cleaned = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', cleaned)
+            cleaned = cleaned.replace('&', '&amp;')
+            return cleaned
+
+        story = []
+        for raw_line in text.splitlines():
+            line = raw_line.strip()
+            if not line:
+                story.append(Spacer(1, 5))
+                continue
+
+            if line.startswith('# '):
+                story.append(Paragraph(clean_line(line[2:]), title_style))
+                continue
+            if line.startswith('## '):
+                story.append(Paragraph(clean_line(line[3:]), heading_style))
+                continue
+            if line.startswith('### '):
+                story.append(Paragraph(clean_line(line[4:]), section_style))
+                continue
+            if line.startswith('- '):
+                story.append(Paragraph(f"• {clean_line(line[2:])}", bullet_style))
+                continue
+            if line.startswith('* '):
+                story.append(Paragraph(f"• {clean_line(line[2:])}", bullet_style))
+                continue
+            if line.startswith('*') and line.endswith('*') and len(line) < 80:
+                story.append(Paragraph(clean_line(line), body_bold_style))
+                continue
+            if line.startswith('**') and line.endswith('**') and len(line) < 120:
+                story.append(Paragraph(clean_line(line), body_bold_style))
+                continue
+            if line.startswith('Munich') or line.startswith('Bengaluru') or line.startswith('Pune') or line.startswith('via ') or line.startswith('Sept ') or line.startswith('Jul ') or line.startswith('Feb ') or line.startswith('2026'):
+                story.append(Paragraph(clean_line(line), meta_style))
+                continue
+            if line.startswith('**English') or line.startswith('**German') or line.startswith('**Hindi') or line.startswith('**Marathi'):
+                story.append(Paragraph(clean_line(line), body_bold_style))
+                continue
+            if line.startswith('*'):
+                story.append(Paragraph(clean_line(line[1:]), italic_style))
+                continue
+            story.append(Paragraph(clean_line(line), body_style))
+
+        return story
+
+    def build_full_cv_pdf_bytes(self):
+        if self.full_cv_raw.strip():
+            buffer = io.BytesIO()
+            doc = SimpleDocTemplate(buffer, pagesize=letter, rightMargin=42, leftMargin=42, topMargin=36, bottomMargin=36)
+            story = self._render_raw_cv_to_pdf_story(self.full_cv_raw)
+            doc.build(story)
+            pdf_bytes = buffer.getvalue()
+            buffer.close()
+            return pdf_bytes
+        return self.build_pdf_bytes()
 
     def build_cover_letter_pdf_bytes(self):
         if self.current_document == "cover_letter_raw" and self.full_cover_letter_raw.strip():
@@ -774,6 +953,21 @@ Sincerely,
             f.write(text)
         return text
 
+    def _load_markdown_file(self, text_widget):
+        filepath = filedialog.askopenfilename(
+            filetypes=[("Markdown Files", "*.md"), ("Text Files", "*.txt"), ("All Files", "*.*")]
+        )
+        if not filepath:
+            return
+        try:
+            with open(filepath, 'r', encoding='utf-8') as f:
+                content = f.read()
+            text_widget.delete("1.0", tk.END)
+            text_widget.insert("1.0", content)
+            messagebox.showinfo("Loaded", f"Loaded markdown file: {filepath}")
+        except Exception as exc:
+            messagebox.showerror("Load Error", f"Could not load markdown file: {exc}")
+
     def _save_full_letter_markdown(self):
         raw_text = self.full_cover_text.get("1.0", tk.END).strip()
         if not raw_text:
@@ -787,6 +981,20 @@ Sincerely,
             with open(filepath, 'w', encoding='utf-8') as f:
                 f.write(raw_text)
             messagebox.showinfo("Saved", f"Full letter saved as markdown/text: {filepath}")
+
+    def _save_full_cv_markdown(self):
+        raw_text = self.full_cv_text.get("1.0", tk.END).strip()
+        if not raw_text:
+            messagebox.showwarning("Full CV", "There is no full CV content to save.")
+            return
+        filepath = filedialog.asksaveasfilename(
+            defaultextension=".md",
+            filetypes=[("Markdown Files", "*.md"), ("Text Files", "*.txt"), ("All Files", "*.*")]
+        )
+        if filepath:
+            with open(filepath, 'w', encoding='utf-8') as f:
+                f.write(raw_text)
+            messagebox.showinfo("Saved", f"Full CV saved as markdown/text: {filepath}")
 
     def update_live_preview(self):
         try:
@@ -1204,18 +1412,32 @@ Sincerely,
             pdf_bytes = self._get_active_pdf_bytes()
             with open(pdf_path, "wb") as f:
                 f.write(pdf_bytes)
-            if self.current_document in ("cover_letter", "cover_letter_raw"):
-                text_path = f"{folder}/{name}.md" if self.current_document == "cover_letter_raw" else f"{folder}/{name}.txt"
-                self._export_cover_letter_text(text_path)
+            if self.current_document == "cover_letter":
+                txt_path = f"{folder}/{name}.txt"
+                self._export_cover_letter_text(txt_path)
                 with open(json_path, 'w', encoding='utf-8') as f:
                     json.dump(self.extract_cover_letter_data(), f, indent=2)
+            elif self.current_document == "cover_letter_raw":
+                txt_path = f"{folder}/{name}.md"
+                self._export_cover_letter_text(txt_path)
+                with open(json_path, 'w', encoding='utf-8') as f:
+                    json.dump(self.extract_cover_letter_data(), f, indent=2)
+            elif self.current_document == "cv_raw":
+                txt_path = f"{folder}/{name}.md"
+                with open(txt_path, 'w', encoding='utf-8') as f:
+                    f.write(self.full_cv_raw)
+                with open(json_path, 'w', encoding='utf-8') as f:
+                    json.dump(self.extract_form_data(), f, indent=2)
             else:
                 with open(json_path, 'w', encoding='utf-8') as f:
                     json.dump(self.extract_form_data(), f, indent=2)
             self.update_live_preview()
-            if self.current_document in ("cover_letter", "cover_letter_raw"):
-                ext = "md" if self.current_document == "cover_letter_raw" else "txt"
-                messagebox.showinfo("Success", f"Saved {name}.pdf, {name}.{ext} and {name}.json to {folder}")
+            if self.current_document == "cover_letter":
+                messagebox.showinfo("Success", f"Saved {name}.pdf, {name}.txt and {name}.json to {folder}")
+            elif self.current_document == "cover_letter_raw":
+                messagebox.showinfo("Success", f"Saved {name}.pdf, {name}.md and {name}.json to {folder}")
+            elif self.current_document == "cv_raw":
+                messagebox.showinfo("Success", f"Saved {name}.pdf, {name}.md and {name}.json to {folder}")
             else:
                 messagebox.showinfo("Success", f"Saved {name}.pdf and {name}.json to {folder}")
         else:
@@ -1224,9 +1446,16 @@ Sincerely,
                 pdf_bytes = self._get_active_pdf_bytes()
                 with open(filepath, "wb") as f:
                     f.write(pdf_bytes)
-                if self.current_document in ("cover_letter", "cover_letter_raw"):
-                    text_path = filepath.rsplit('.', 1)[0] + ('.md' if self.current_document == 'cover_letter_raw' else '.txt')
-                    self._export_cover_letter_text(text_path)
+                if self.current_document == "cover_letter":
+                    txt_path = filepath.rsplit('.', 1)[0] + '.txt'
+                    self._export_cover_letter_text(txt_path)
+                elif self.current_document == "cover_letter_raw":
+                    txt_path = filepath.rsplit('.', 1)[0] + '.md'
+                    self._export_cover_letter_text(txt_path)
+                elif self.current_document == "cv_raw":
+                    txt_path = filepath.rsplit('.', 1)[0] + '.md'
+                    with open(txt_path, 'w', encoding='utf-8') as f:
+                        f.write(self.full_cv_raw)
                 self.update_live_preview()
                 messagebox.showinfo("Success", "PDF exported successfully!")
 
