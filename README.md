@@ -62,6 +62,31 @@ This creates:
 sample_cover_letter.pdf
 ```
 
+# Input file and output PDF path
+```text
+python ResumeTextFormatterv4.py --Output "path\resume.md" "path\output\resume.pdf"
+```
+
+# JSON input
+```text
+python ResumeTextFormatterv4.py --Output "path\resume.json" "path\output\resume.pdf"
+```
+
+# Use default sample_cover_letter.md with custom output
+```text
+python ResumeTextFormatterv4.py --Output --output-path "path\output\cover_letter.pdf"
+```
+
+# Input path only: creates PDF beside input
+```text
+python ResumeTextFormatterv4.py --Output "path\resume.md"
+```
+
+# Default sample cover letter
+```text
+python ResumeTextFormatterv4.py --Output
+```
+
 ### Export a markdown file
 
 ```powershell
@@ -76,6 +101,18 @@ path\to\document.pdf
 
 Both CV and cover letter markdown files are supported. CV markdown is identified by headings such as `## PROFESSIONAL SUMMARY` or `## PROFESSIONAL EXPERIENCE`; other markdown is treated as a cover letter.
 
+To choose the output path explicitly, provide it after the input path:
+
+```powershell
+python ResumeTextFormatterv4.py --Output path\to\document.md path\to\exports\my_resume.pdf
+```
+
+The output filename may omit the `.pdf` extension; the formatter adds it automatically. The same syntax works for JSON input:
+
+```powershell
+python ResumeTextFormatterv4.py --Output path\to\document.json path\to\exports\my_resume.pdf
+```
+
 ### Export a JSON file
 
 ```powershell
@@ -88,6 +125,12 @@ The application identifies the JSON type automatically:
 - Cover letter JSON contains fields such as `recipient` or `body`.
 
 The PDF is written beside the JSON file with the same base name.
+
+You can also use the default sample input with a custom destination:
+
+```powershell
+python ResumeTextFormatterv4.py --Output --output-path path\to\exports\cover_letter.pdf
+```
 
 ## Input formats
 

@@ -1559,7 +1559,7 @@ English — Professional | German — A2 | Hindi — Professional | Marathi — 
             messagebox.showinfo("Success", f"Saved {base_path}.pdf and {base_path}.json")
 
 
-def export_pdf_from_file(input_path=None):
+def export_pdf_from_file(input_path=None, output_path=None):
     app_dir = Path(__file__).resolve().parent
     source_path = Path(input_path) if input_path else app_dir / "sample_cover_letter.md"
     if not source_path.is_file():
@@ -1597,7 +1597,9 @@ def export_pdf_from_file(input_path=None):
     else:
         raise ValueError("Input must be a .md, .markdown, .txt, or .json file.")
 
-    pdf_path = source_path.with_suffix(".pdf")
+    pdf_path = Path(output_path) if output_path else source_path.with_suffix(".pdf")
+    if pdf_path.suffix.lower() != ".pdf":
+        pdf_path = pdf_path.with_suffix(".pdf")
     pdf_path.write_bytes(exporter._get_active_pdf_bytes())
     return pdf_path
 
@@ -1606,10 +1608,14 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description="Edit resumes or export a PDF without opening the UI.")
     parser.add_argument(
         "--Output",
-        nargs="?",
-        const="",
-        metavar="INPUT_FILE",
-        help="Export a PDF from an optional .md or .json file. Defaults to sample_cover_letter.md.",
+        nargs="*",
+        metavar="PATH",
+        help="Export a PDF. Provide INPUT_PATH and optionally OUTPUT_PATH.",
+    )
+    parser.add_argument(
+        "--output-path",
+        metavar="OUTPUT_PATH",
+        help="Destination PDF path for --Output; defaults beside the input file.",
     )
     return parser.parse_args()
 
@@ -1618,7 +1624,16 @@ if __name__ == "__main__":
     arguments = parse_arguments()
     if arguments.Output is not None:
         try:
-            output_path = export_pdf_from_file(arguments.Output or None)
+            if len(arguments.Output) > 2:
+                raise ValueError("--Output accepts at most INPUT_PATH and OUTPUT_PATH.")
+            input_path = arguments.Output[0] if arguments.Output else None
+            positional_output = arguments.Output[1] if len(arguments.Output) == 2 else None
+            if positional_output and arguments.output_path:
+                raise ValueError("Specify the output path only once.")
+            output_path = export_pdf_from_file(
+                input_path,
+                arguments.output_path or positional_output,
+            )
             print(f"Exported PDF: {output_path}")
         except (OSError, ValueError, json.JSONDecodeError) as exc:
             raise SystemExit(f"Export failed: {exc}")
