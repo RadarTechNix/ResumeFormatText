@@ -1,7 +1,7 @@
 # **Nikhil Ganpat Navghade**
 **RADAR SYSTEMS ENGINEER | AUTOMOTIVE ADAS | RADAR SoC | SYSTEM INTEGRATION & VALIDATION**
 
-Munich, Germany | +49 163 5454172 | [nikhil.nawaghadej@gmail.com](mailto:nikhil.nawaghadej@gmail.com) | linkedin.com/in/nikhil-navghade/ | VisitMySite: radartechnix.github.io/Profile/
+Munich, Germany | +49 163 5454172 | [nikhil.nawaghadej@gmail.com](mailto:nikhil.nawaghadej@gmail.com) | linkedin.com/in/nikhil-navghade/ | radartechnix.github.io/Profile/
 
 ## **PROFESSIONAL SUMMARY**
 Radar Systems Engineer with **12 years of experience** spanning automotive ADAS, FMCW and pulsed radar, radar SoCs, signal processing, system architecture, integration, validation, and customer engineering. Experienced in translating customer and system requirements into technical solutions, designing radar architectures, performing hardware/software integration and laboratory validation, and troubleshooting RF, mixed-signal, embedded, DSP, and system-level issues. Strong background in automotive radar at Continental, radar system architecture at Fusionride, radar SoC customer engineering at Calterah, and semiconductor system integration and validation at NXP. Experienced with MATLAB/Simulink, Python, Embedded C, HP DOORS, HP ETM/ELM, ASIL B-related validation, MISRA checks, and ASPICE-compliant development. Additional hands-on cybersecurity experience with secure boot, secure firmware, OTP/eFuse, key/certificate provisioning, and Ethernet debugging.

@@ -1,6 +1,8 @@
 import io
 import json
 import re
+import argparse
+from pathlib import Path
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 
@@ -112,8 +114,9 @@ class ResumeApp:
         self.root.title("Automotive Radar Resume Editor & Live PDF Preview")
         self.root.geometry("1400x900")
 
-        self.data = INITIAL_DATA
-        self.cover_letter_data = {
+        app_dir = Path(__file__).resolve().parent
+        self.data = self._load_json_or_default(app_dir / "sample_cv.json", INITIAL_DATA)
+        self.cover_letter_data = self._load_json_or_default(app_dir / "sample_cover_letter.json", {
             "header": {
                 "name": "Nikhil Ganpat Navghade",
                 "location": "Munich, Germany, 80809",
@@ -129,11 +132,11 @@ class ResumeApp:
             "body": "My T-shaped profile can be summarized as:\n\n- Deep Expertise (Vertical): Automotive FMCW radar, ADAS radar, pulsed radar, MIMO/DOA, 1D–4D FFT processing, CFAR, beamforming, detection, sidelobe suppression, radar system architecture, and multi-core optimization. At Fusionride, I contributed to complete radar system development, delivered the first 4×4 corner radar prototype with real-time detections within one year, and contributed to 6×8 front-radar development. At Continental, I developed and validated radar functions with 99.92% functional coverage.\n- Broad Capabilities (Horizontal): Radar SoCs, RF characterization, hardware/software integration, MATLAB/Simulink, Python, Embedded C, requirements management using HP DOORS and HP ETM/ELM, system bring-up, laboratory validation, functional safety-related activities in an ASIL B environment, and ASPICE-compliant development processes. My customer-facing experience at Calterah also includes customer requirements analysis, technical support, system troubleshooting, product demonstrations, and collaboration with R&D, hardware, software, applications, and product teams.\n- Additional System Expertise: Hands-on experience with radar semiconductor cybersecurity and embedded integration, including secure boot, secure firmware/software, OTP/eFuse configuration, key and certificate provisioning, and Ethernet driver debugging. This allows me to understand radar products from semiconductor and system levels and effectively connect customer requirements with engineering implementation.",
             "closing": "I am particularly motivated by InnoSenT's combination of automotive and industrial radar development, system design, customer requirements, and cross-functional engineering. I believe my combination of deep radar expertise and broad system-level experience would allow me to contribute effectively to the development and continuous improvement of InnoSenT's radar sensors.\n\nI would welcome the opportunity to discuss how my experience can support your radar system engineering and future product development activities. Thank you for your time and consideration.",
             "signature": "Nikhil Ganpat Navghade"
-        }
+        })
         self.full_cover_letter_raw = """# **Nikhil Ganpat Navghade**
 **RADAR SYSTEMS ENGINEER | AUTOMOTIVE ADAS | RADAR SoC | SYSTEM INTEGRATION & VALIDATION**
 
-Munich, Germany | +49 163 5454172 | [nikhil.nawaghadej@gmail.com](mailto:nikhil.nawaghadej@gmail.com) | linkedin.com/in/nikhil-navghade/ | VisitMySite: radartechnix.github.io/Profile/
+Munich, Germany | +49 163 5454172 | [nikhil.nawaghadej@gmail.com](mailto:nikhil.nawaghadej@gmail.com) | linkedin.com/in/nikhil-navghade/ |  radartechnix.github.io/Profile/
 
 **InnoSenT GmbH,**
 
@@ -161,7 +164,7 @@ Sincerely,
         self.full_cv_raw = """# **Nikhil Ganpat Navghade**
 **RADAR SYSTEMS ENGINEER | AUTOMOTIVE ADAS | RADAR SoC | SYSTEM INTEGRATION & VALIDATION**
 
-Munich, Germany | +49 163 5454172 | [nikhil.nawaghadej@gmail.com](mailto:nikhil.nawaghadej@gmail.com) | linkedin.com/in/nikhil-navghade/ | VisitMySite: radartechnix.github.io/Profile/
+Munich, Germany | +49 163 5454172 | [nikhil.nawaghadej@gmail.com](mailto:nikhil.nawaghadej@gmail.com) | linkedin.com/in/nikhil-navghade/ | radartechnix.github.io/Profile/
 
 ## **PROFESSIONAL SUMMARY**
 Radar Systems Engineer with **12 years of experience** spanning automotive ADAS, FMCW and pulsed radar, radar SoCs, signal processing, system architecture, integration, validation, and customer engineering. Experienced in translating customer and system requirements into technical solutions, designing radar architectures, performing hardware/software integration and laboratory validation, and troubleshooting RF, mixed-signal, embedded, DSP, and system-level issues. Strong background in automotive radar at Continental, radar system architecture at Fusionride, radar SoC customer engineering at Calterah, and semiconductor system integration and validation at NXP. Experienced with MATLAB/Simulink, Python, Embedded C, HP DOORS, HP ETM/ELM, ASIL B-related validation, MISRA checks, and ASPICE-compliant development. Additional hands-on cybersecurity experience with secure boot, secure firmware, OTP/eFuse, key/certificate provisioning, and Ethernet debugging.
@@ -243,6 +246,12 @@ Radar Systems Engineer with **12 years of experience** spanning automotive ADAS,
 
 ## **LANGUAGES**
 English — Professional | German — A2 | Hindi — Professional | Marathi — Native"""
+        self.full_cover_letter_raw = self._load_text_or_default(
+            app_dir / "sample_cover_letter.md", self.full_cover_letter_raw
+        )
+        self.full_cv_raw = self._load_text_or_default(
+            app_dir / "sample_cv.md", self.full_cv_raw
+        )
         self.preview_images = []
         self.preview_scale = 1.0  # zoom multiplier for PDF preview
         self.current_document = "resume"
@@ -250,6 +259,22 @@ English — Professional | German — A2 | Hindi — Professional | Marathi — 
         self.create_widgets()
         self.populate_form()
         self.populate_cover_letter_form()
+
+    @staticmethod
+    def _load_json_or_default(path, default):
+        try:
+            with path.open("r", encoding="utf-8") as file:
+                value = json.load(file)
+            return value if isinstance(value, dict) else default
+        except (OSError, json.JSONDecodeError):
+            return default
+
+    @staticmethod
+    def _load_text_or_default(path, default):
+        try:
+            return path.read_text(encoding="utf-8")
+        except OSError:
+            return default
 
     def create_widgets(self):
         # Top Bar
@@ -524,6 +549,8 @@ English — Professional | German — A2 | Hindi — Professional | Marathi — 
         self.update_live_preview()
 
     def extract_form_data(self):
+        if getattr(self, "headless", False):
+            return self.data
         return {
             "header": {k: ent.get().strip() for k, ent in self.hdr_entries.items()},
             "summary": self.summary_text.get("1.0", tk.END).strip(),
@@ -562,6 +589,8 @@ English — Professional | German — A2 | Hindi — Professional | Marathi — 
         self.cover_signature_entry.insert(0, self.cover_letter_data.get("signature", "Nikhil Ganpat Navghade"))
 
     def extract_cover_letter_data(self):
+        if getattr(self, "headless", False):
+            return self.cover_letter_data
         return {
             "header": {
                 "company": self.cover_company_entry.get().strip(),
@@ -773,7 +802,7 @@ English — Professional | German — A2 | Hindi — Professional | Marathi — 
             )
             value = value.replace(
                 'radartechnix.github.io/Profile/',
-                '<link href="https://radartechnix.github.io/Profile/"><font color="#0B57D0">Website</font></link>',
+                '<link href="https://radartechnix.github.io/Profile/"><font color="#0B57D0">visitMyWebsite</font></link>',
             )
             value = re.sub(r'\*\*(.+?)\*\*', r'\1', value)
             value = value.replace('&', '&amp;')
@@ -880,7 +909,7 @@ English — Professional | German — A2 | Hindi — Professional | Marathi — 
             )
             cleaned = cleaned.replace(
                 'radartechnix.github.io/Profile/',
-                '<link href="https://radartechnix.github.io/Profile/"><font color="#0B57D0">Website</font></link>',
+                '<link href="https://radartechnix.github.io/Profile/"><font color="#0B57D0">visitMyWebsite</font></link>',
             )
             cleaned = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', cleaned)
             cleaned = cleaned.replace('&', '&amp;')
@@ -1529,7 +1558,71 @@ English — Professional | German — A2 | Hindi — Professional | Marathi — 
         else:
             messagebox.showinfo("Success", f"Saved {base_path}.pdf and {base_path}.json")
 
+
+def export_pdf_from_file(input_path=None):
+    app_dir = Path(__file__).resolve().parent
+    source_path = Path(input_path) if input_path else app_dir / "sample_cover_letter.md"
+    if not source_path.is_file():
+        raise FileNotFoundError(f"Input file not found: {source_path}")
+
+    exporter = ResumeApp.__new__(ResumeApp)
+    exporter.headless = True
+    exporter.current_document = "resume"
+    exporter.data = INITIAL_DATA
+    exporter.cover_letter_data = {}
+    exporter.full_cv_raw = ""
+    exporter.full_cover_letter_raw = ""
+
+    if source_path.suffix.lower() == ".json":
+        with source_path.open("r", encoding="utf-8") as file:
+            parsed = json.load(file)
+        if not isinstance(parsed, dict):
+            raise ValueError("The JSON input must contain an object/dictionary.")
+        if "experience" in parsed or "summary" in parsed:
+            exporter.data = parsed
+            exporter.current_document = "resume"
+        elif "recipient" in parsed or "body" in parsed:
+            exporter.cover_letter_data = parsed
+            exporter.current_document = "cover_letter"
+        else:
+            raise ValueError("Could not identify the JSON as a CV or cover letter.")
+    elif source_path.suffix.lower() in {".md", ".markdown", ".txt"}:
+        content = source_path.read_text(encoding="utf-8")
+        if "## PROFESSIONAL SUMMARY" in content.upper() or "## PROFESSIONAL EXPERIENCE" in content.upper():
+            exporter.full_cv_raw = content
+            exporter.current_document = "cv_raw"
+        else:
+            exporter.full_cover_letter_raw = content
+            exporter.current_document = "cover_letter_raw"
+    else:
+        raise ValueError("Input must be a .md, .markdown, .txt, or .json file.")
+
+    pdf_path = source_path.with_suffix(".pdf")
+    pdf_path.write_bytes(exporter._get_active_pdf_bytes())
+    return pdf_path
+
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(description="Edit resumes or export a PDF without opening the UI.")
+    parser.add_argument(
+        "--Output",
+        nargs="?",
+        const="",
+        metavar="INPUT_FILE",
+        help="Export a PDF from an optional .md or .json file. Defaults to sample_cover_letter.md.",
+    )
+    return parser.parse_args()
+
+
 if __name__ == "__main__":
-    root = tk.Tk()
-    app = ResumeApp(root)
-    root.mainloop()
+    arguments = parse_arguments()
+    if arguments.Output is not None:
+        try:
+            output_path = export_pdf_from_file(arguments.Output or None)
+            print(f"Exported PDF: {output_path}")
+        except (OSError, ValueError, json.JSONDecodeError) as exc:
+            raise SystemExit(f"Export failed: {exc}")
+    else:
+        root = tk.Tk()
+        app = ResumeApp(root)
+        root.mainloop()

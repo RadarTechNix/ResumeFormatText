@@ -1,28 +1,34 @@
 # **Nikhil Ganpat Navghade**
-**RADAR SYSTEMS ENGINEER | AUTOMOTIVE ADAS | RADAR SoC | SYSTEM INTEGRATION & VALIDATION**
 
-Munich, Germany | +49 163 5454172 | [nikhil.nawaghadej@gmail.com](mailto:nikhil.nawaghadej@gmail.com) | linkedin.com/in/nikhil-navghade/ | VisitMySite: radartechnix.github.io/Profile/
+**EMBEDDED SOFTWARE & RADAR ENGINEER | RADAR SIGNAL PROCESSING | C | DSP & SoC**
+
+Munich, Germany | +49 163 5454172 | [nikhil.nawaghadej@gmail.com](mailto:nikhil.nawaghadej@gmail.com) | linkedin.com/in/nikhil-navghade/ |  radartechnix.github.io/Profile/
 
 **InnoSenT GmbH,**
 
 Erlangen / Donnersdorf, Germany
 
-**Application for Radar-System-Ingenieur (m/w/d)**
+**Application for Embedded Software Developer (m/f/d) for Radar Applications**
+
 
 Dear Hiring Professional,
 
-I am writing to express my interest in the Radar-System-Ingenieur position at InnoSenT GmbH. With **12 years of experience in radar engineering**, I offer a T-shaped profile combining deep expertise in radar signal processing and system architecture with broad experience in automotive ADAS, radar SoCs, RF systems, system integration, validation, requirements, and customer engineering.
+I am writing to express my interest in the Embedded Software Developer position for Radar Applications at InnoSenT GmbH. With **12 years of radar experience**, I offer a T-shaped profile combining deep expertise in **radar signal processing, embedded software and algorithm development** with broad experience in radar SoCs, automotive ADAS, system integration, validation, RF systems, and customer engineering.
 
 My T-shaped profile can be summarized as:
 
-- Deep Expertise (Vertical): Automotive FMCW radar, ADAS radar, pulsed radar, MIMO/DOA, 1D–4D FFT processing, CFAR, beamforming, detection, sidelobe suppression, radar system architecture, and multi-core optimization. At Fusionride, I contributed to complete radar system development, delivered the first 4×4 corner radar prototype with real-time detections within one year, and contributed to 6×8 front-radar development. At Continental, I developed and validated radar functions with 99.92% functional coverage.
-- Broad Capabilities (Horizontal): Radar SoCs, RF characterization, hardware/software integration, MATLAB/Simulink, Python, Embedded C, requirements management using HP DOORS and HP ETM/ELM, system bring-up, laboratory validation, functional safety-related activities in an ASIL B environment, and ASPICE-compliant development processes. My customer-facing experience at Calterah also includes customer requirements analysis, technical support, system troubleshooting, product demonstrations, and collaboration with R&D, hardware, software, applications, and product teams.
-- Additional System Expertise: Hands-on experience with radar semiconductor cybersecurity and embedded integration, including secure boot, secure firmware/software, OTP/eFuse configuration, key and certificate provisioning, and Ethernet driver debugging. This allows me to understand radar products from semiconductor and system levels and effectively connect customer requirements with engineering implementation.
+**Deep Expertise (Vertical):**
+Embedded C, radar signal processing, FMCW and pulsed radar, FFT, MIMO, CFAR, beamforming, detection, and real-time DSP/SoC optimization.** At Continental, I developed and validated Embedded C and MATLAB radar functions for automotive ADAS systems and achieved **99.92% functional coverage** for Gen5 radar validation. At Fusionride, I designed complete 1D–4D radar processing chains and contributed to multi-core radar architectures, focusing on computational efficiency, memory mapping, and real-time execution.
 
-I am particularly motivated by InnoSenT's combination of automotive and industrial radar development, system design, customer requirements, and cross-functional engineering. I believe my combination of deep radar expertise and broad system-level experience would allow me to contribute effectively to the development and continuous improvement of InnoSenT's radar sensors.
+**Broad Capabilities (Horizontal):**
+ Radar SoCs, Python, MATLAB/Simulink, hardware/software integration, software testing, system validation, requirements engineering, HP DOORS, HP ETM/ELM, and automotive development processes.** My experience includes ASIL B-related validation, MISRA checks, and participation in an ASPICE-compliant development environment. At NXP, I currently develop automated validation for 77 GHz radar semiconductor products and analyze system and laboratory measurements.
 
-I would welcome the opportunity to discuss how my experience can support your radar system engineering and future product development activities. Thank you for your time and consideration.
+**Additional System Expertise:**
+ My customer-facing experience at Calterah provides a broader system perspective, including customer requirements analysis, radar SoC integration, DSP and interface debugging, technical problem solving, and collaboration with R&D and hardware/software teams. I also gained hands-on experience with secure boot, secure firmware, OTP/eFuse configuration, key and certificate provisioning, and Ethernet driver debugging.
+
+I am particularly motivated by InnoSenT's combination of **embedded software development, radar signal processing, DSP/SoC optimization, and close collaboration with hardware and systems engineering**. This role closely matches the combination of software and radar expertise I have developed throughout my career, and I would be excited to contribute to InnoSenT's industrial and automotive radar solutions.
+
+I would welcome the opportunity to discuss how my embedded software, radar algorithm, and system-level experience can contribute to your development team. Thank you for your time and consideration.
 
 Sincerely,
-
-**Nikhil Ganpat Navghade**
+Nikhil Ganpat Navghade
